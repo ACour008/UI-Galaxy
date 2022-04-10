@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182888a08ce35cb41aafbca3c65a0464, type: 3}
+  m_Name: StarData
+  m_EditorClassIdentifier: 
+  settings:
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 7
+    color: {r: 0, g: 0.8, b: 1, a: 1}
+    chanceOfSpawn: 0.01
+    prefabScaleRange:
+      min: 0.99
+      max: 1.12
+    radiusRange:
+      min: 4591620000
+      max: 6957000000
+    ageRange:
+      min: 10000000
+      max: 99999999
+    tempRangeInK:
+      min: 30000
+      max: 100000
+    massInKG:
+      min: 3.2e+31
+      max: 1.8e+32
+    luminosityInMagnitude:
+      min: 30000
+      max: 100000
+    numJumpgates:
+      min: 0
+      max: 0
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 6
+    color: {r: 0.49803922, g: 1, b: 1, a: 1}
+    chanceOfSpawn: 0.01
+    prefabScaleRange:
+      min: 0.84
+      max: 0.98
+    radiusRange:
+      min: 0
+      max: 0
+    ageRange:
+      min: 0
+      max: 0
+    tempRangeInK:
+      min: 0
+      max: 0
+    massInKG:
+      min: 0
+      max: 0
+    luminosityInMagnitude:
+      min: 0
+      max: 0
+    numJumpgates:
+      min: 0
+      max: 0
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 5
+    color: {r: 0.8156863, g: 1, b: 1, a: 1}
+    chanceOfSpawn: 0.01
+    prefabScaleRange:
+      min: 0.69
+      max: 0.83
+    radiusRange:
+      min: 0
+      max: 0
+    ageRange:
+      min: 0
+      max: 0
+    tempRangeInK:
+      min: 0
+      max: 0
+    massInKG:
+      min: 0
+      max: 0
+    luminosityInMagnitude:
+      min: 0
+      max: 0
+    numJumpgates:
+      min: 0
+      max: 0
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 4
+    color: {r: 1, g: 1, b: 0.49803922, a: 1}
+    chanceOfSpawn: 0.02
+    prefabScaleRange:
+      min: 0.54
+      max: 0.68
+    radiusRange:
+      min: 0
+      max: 0
+    ageRange:
+      min: 0
+      max: 0
+    tempRangeInK:
+      min: 0
+      max: 0
+    massInKG:
+      min: 0
+      max: 0
+    luminosityInMagnitude:
+      min: 0
+      max: 0
+    numJumpgates:
+      min: 0
+      max: 0
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 3
+    color: {r: 1, g: 1, b: 0, a: 1}
+    chanceOfSpawn: 0.04
+    prefabScaleRange:
+      min: 0.39
+      max: 0.53
+    radiusRange:
+      min: 0
+      max: 0
+    ageRange:
+      min: 0
+      max: 0
+    tempRangeInK:
+      min: 0
+      max: 0
+    massInKG:
+      min: 0
+      max: 0
+    luminosityInMagnitude:
+      min: 0
+      max: 0
+    numJumpgates:
+      min: 0
+      max: 0
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 2
+    color: {r: 1, g: 0.35239166, b: 0, a: 1}
+    chanceOfSpawn: 0.08
+    prefabScaleRange:
+      min: 0.24
+      max: 0.38
+    radiusRange:
+      min: 0
+      max: 0
+    ageRange:
+      min: 0
+      max: 0
+    tempRangeInK:
+      min: 0
+      max: 0
+    massInKG:
+      min: 0
+      max: 0
+    luminosityInMagnitude:
+      min: 0
+      max: 0
+    numJumpgates:
+      min: 0
+      max: 0
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 1
+    color: {r: 1, g: 0, b: 0, a: 1}
+    chanceOfSpawn: 0.8
+    prefabScaleRange:
+      min: 0.15
+      max: 0.23
+    radiusRange:
+      min: 0
+      max: 0
+    ageRange:
+      min: 0
+      max: 0
+    tempRangeInK:
+      min: 0
+      max: 0
+    massInKG:
+      min: 0
+      max: 0
+    luminosityInMagnitude:
+      min: 0
+      max: 0
+    numJumpgates:
+      min: 0
+      max: 0
+  - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
+    type: 0
+    color: {r: 0.49056602, g: 0, b: 0, a: 1}
+    chanceOfSpawn: 0.03
+    prefabScaleRange:
+      min: 0.1
+      max: 0.14
+    radiusRange:
+      min: 0
+      max: 0
+    ageRange:
+      min: 0
+      max: 0
+    tempRangeInK:
+      min: 0
+      max: 0
+    massInKG:
+      min: 0
+      max: 0
+    luminosityInMagnitude:
+      min: 0
+      max: 0
+    numJumpgates:
+      min: 0
+      max: 0
