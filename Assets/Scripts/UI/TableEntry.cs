@@ -35,4 +35,9 @@ public class TableEntry : MonoBehaviour
         nameField.text = "";
         distanceField.text = "";
     }
+
+    private void OnDisable()
+    {
+        ClearAll();
+    }
 }

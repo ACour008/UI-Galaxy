@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5050720160212302467}
   m_Layer: 0
   m_Name: Star System
-  m_TagString: Untagged
+  m_TagString: PlanetUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e88b4b24803340448bec4ec3360d153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  orbitalDistance: 0
   spriteRenderer: {fileID: 8216169284392343269}
+  jumpGates: []
+  planets: []
 --- !u!58 &5050720160212302467
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class JumpGate: Orbital
 {
-    public double OrbitalDistance { get => orbitalDistance; }
 
     private void Awake()
     {

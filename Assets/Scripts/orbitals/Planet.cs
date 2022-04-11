@@ -7,8 +7,6 @@ public class Planet : Orbital
 {
     private PlanetType type;
 
-    public double OrbitalDistance { get => orbitalDistance; }
-
     private void Awake()
     {
         name = $"Planet_{LehmerRNG.Next(0, 10000)}";

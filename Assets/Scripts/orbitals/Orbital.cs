@@ -9,4 +9,6 @@ public abstract class Orbital: MonoBehaviour
     protected double temperature;
     protected double mass;
     public double orbitalDistance;
+
+    public double OrbitalDistance { get => orbitalDistance; }
 }

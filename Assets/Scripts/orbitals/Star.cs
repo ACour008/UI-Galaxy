@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class Star : Orbital, IPointerClickHandler
+public class Star : Orbital, IClickable
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
 
@@ -27,7 +27,6 @@ public class Star : Orbital, IPointerClickHandler
     public SystemType Type { get => type; }
     public int PlanetCount { get => numPlanets; }
     public int JumpGateCount { get => numJumpGates; }
-    public double OrbitalDistance { get => orbitalDistance; }
     public List<Planet> Planets { get => planets; }
     public List<JumpGate> JumpGates { get => jumpGates; }
 
@@ -74,7 +73,7 @@ public class Star : Orbital, IPointerClickHandler
         }
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClicked()
     {
         foreach(Transform child in transform)
         {
