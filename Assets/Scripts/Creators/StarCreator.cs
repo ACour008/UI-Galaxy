@@ -1,25 +1,32 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class StarCreator : ICreator<StarData>
+public class StarCreator : Creator, ICreator<StarData, Star>
 {
-    public void Create(float x, float y, Transform parent, StarData data, bool generateAll = false)
+    public StarCreator(DataManager dataManager)
+    {
+        this.dataManager = dataManager;
+    }
+
+    public Star Create(float x, float y, Transform parent, bool generateAll = false)
     {
         bool starShouldExist = LehmerRNG.Next(0, 21) == 1;
-        if (!starShouldExist) return;
+        if (!starShouldExist) {
+            return null;
+        }
 
-        StarData d = data;
+
+
+        StarData data = dataManager.GetData<StarData>();
         float total = 0;
 
-        foreach(StarSettings setting in d.Settings)
+        foreach(StarSettings setting in data.Settings)
         {
             total += setting.chanceOfSpawn;
         }
 
-        foreach(StarSettings setting in d.Settings)
+        foreach(StarSettings setting in data.Settings)
         {
-            Debug.Log($"{x}, {y}");
-
             float chance = setting.chanceOfSpawn;
             bool chanceSucceeds = LehmerRNG.NextDouble(0f, total) < chance;
 
@@ -30,14 +37,13 @@ public class StarCreator : ICreator<StarData>
                 Star newStar = gameObject.GetComponent<Star>();
                 
                 newStar.Init(setting, generateAll);
-                return;
+                return newStar;
             }
             else
             {
                 total -= chance;
             }
         }
-
-
+        return null;
     }
 }

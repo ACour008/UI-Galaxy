@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -7,57 +8,79 @@ public class Star : Orbital, IPointerClickHandler
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    private StarSettings data;
     private SystemType type;
     private Vector3 position;
     private Color color;
     private double luminosity;
     private Vector3 localScale;
 
-    private List<JumpGate> jumpGates = new List<JumpGate>();
-    private List<Planet> planets = new List<Planet>();
+    private int numPlanets, numJumpGates;
+    [SerializeField] private List<JumpGate> jumpGates = new List<JumpGate>();
+    [SerializeField] private List<Planet> planets = new List<Planet>();
 
-    
+    public event EventHandler OnClicked;
+
+    private PlanetCreator planetCreator;
+    private JumpGateCreator jumpGateCreator;
+
+    public SystemType Type { get => type; }
+    public int PlanetCount { get => numPlanets; }
+    public int JumpGateCount { get => numJumpGates; }
+    public double OrbitalDistance { get => orbitalDistance; }
+    public List<Planet> Planets { get => planets; }
+    public List<JumpGate> JumpGates { get => jumpGates; }
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        planetCreator = (PlanetCreator)CreatorFactory.GetCreatorFor<Planet>();
+        jumpGateCreator = (JumpGateCreator)CreatorFactory.GetCreatorFor<JumpGate>();
     }
 
     public void Init(StarSettings settings, bool generateAll)
     {
-        StarSettings s = settings;
-        float scaleXY = LehmerRNG.NextFloat(s.prefabScaleRange.min, s.prefabScaleRange.max);
+        data = settings;
+        float scaleXY = LehmerRNG.NextFloat(data.prefabScaleRange.min, data.prefabScaleRange.max);
 
         type = settings.type;
         color = settings.color;
-        radius = LehmerRNG.NextDouble(s.radiusRange.min, s.radiusRange.max);
-        age = LehmerRNG.NextDouble(s.ageRange.min, s.ageRange.max);
-        temperature = LehmerRNG.NextDouble(s.tempRangeInK.min, s.tempRangeInK.max);
-        luminosity = LehmerRNG.NextDouble(s.luminosityInMagnitude.min, s.luminosityInMagnitude.max);
+        radius = LehmerRNG.NextDouble(data.radiusRange.min, data.radiusRange.max);
+        age = LehmerRNG.NextDouble(data.ageRange.min, data.ageRange.max);
+        temperature = LehmerRNG.NextDouble(data.tempRangeInK.min, data.tempRangeInK.max);
+        luminosity = LehmerRNG.NextDouble(data.luminosityInMagnitude.min, data.luminosityInMagnitude.max);
+        orbitalDistance = 0;
+        name = $"Star_{LehmerRNG.Next(0, 5000)}";
 
-        spriteRenderer.color = color;
+    spriteRenderer.color = color;
         transform.localScale = new Vector3(scaleXY, scaleXY);
+
+        numPlanets = Mathf.Max(LehmerRNG.Next(-1, 10), 1);
+        numJumpGates = LehmerRNG.Next(data.numJumpgates.min, data.numJumpgates.max);
 
         if (!generateAll) return;
 
-        int numPlanets = Mathf.Max(LehmerRNG.Next(-2, 10), 0);
-
-        //temp
         for (int p = 0; p < numPlanets; p++)
         {
-            planets.Add(new Planet());
+            Planet newPlanet = planetCreator.Create(0, 0, this.transform, generateAll);
+            planets.Add(newPlanet);
         }
 
-        int numJumpGates = LehmerRNG.Next(s.numJumpgates.min, s.numJumpgates.max);
 
-        for (int j = 0; j < numPlanets; j++)
+        for (int j = 0; j < numJumpGates; j++)
         {
-            jumpGates.Add(new JumpGate());
+            JumpGate newJumpGate = jumpGateCreator.Create(0, 0, this.transform, generateAll);
+            jumpGates.Add(newJumpGate);
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log($"SYSTEM INFO:\nType: {type}\nNo. of Planets: {planets.Count}\nNo. of Jump Gates: {jumpGates.Count}");
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(true);
+        }
+
+        OnClicked?.Invoke(this, new OnStarClickEventArgs { star = this });
     }
 }

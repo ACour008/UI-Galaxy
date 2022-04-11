@@ -14,11 +14,14 @@ public class PlanetData : ScriptableObject, IData<PlanetSettings>
 public struct PlanetSettings
 {
     public PlanetType type;
+    public float chanceOfSpawn;
+    public GameObject prefab;
     public MinMax<double> radiusRange;
     public MinMax<double> ageRange;
     public MinMax<double> temperatureRangeInC;
     public MinMax<double> massRange;
     public MinMax<double> distanceFromSuninKM;
+    public List<Sprite> planetSprites;
 }
 
 public enum PlanetType

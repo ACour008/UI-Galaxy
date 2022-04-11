@@ -8,18 +8,18 @@ public class Galaxy:MonoBehaviour
     [SerializeField] private bool discoveryMode;
     [SerializeField] private int seed;
 
-    private DataManager dataManager;
+    [SerializeField] private StarInfoPanel infoPanel; // for now;
+
     private StarCreator starCreator;
 
     private void Awake()
     {
         LehmerRNG.Initialize(seed);
-        dataManager = new DataManager();
-        starCreator = new StarCreator();
     }
 
     private void Start()
     {
+        starCreator = (StarCreator)CreatorFactory.GetCreatorFor<Star>();
         Initialize();
     }
 
@@ -34,8 +34,9 @@ public class Galaxy:MonoBehaviour
         {
             for (int yPosition = 0; yPosition < sectorSizeY; yPosition++)
             {
-                StarData data = dataManager.GetData<StarData>();
-                starCreator.Create(xPosition, yPosition, this.transform, data, !discoveryMode);
+                Star star = starCreator.Create(xPosition, yPosition, this.transform, !discoveryMode);
+
+                if (star != null) star.OnClicked += infoPanel.Star_OnClicked;
             }
         }
     }

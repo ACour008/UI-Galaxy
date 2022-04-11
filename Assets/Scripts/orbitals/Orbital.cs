@@ -8,4 +8,5 @@ public abstract class Orbital: MonoBehaviour
     protected double age;
     protected double temperature;
     protected double mass;
+    public double orbitalDistance;
 }

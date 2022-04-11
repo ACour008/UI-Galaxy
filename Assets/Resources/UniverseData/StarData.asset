@@ -36,8 +36,8 @@ MonoBehaviour:
       min: 30000
       max: 100000
     numJumpgates:
-      min: 0
-      max: 0
+      min: 1
+      max: 4
   - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
     type: 6
     color: {r: 0.49803922, g: 1, b: 1, a: 1}
@@ -61,8 +61,8 @@ MonoBehaviour:
       min: 0
       max: 0
     numJumpgates:
-      min: 0
-      max: 0
+      min: 1
+      max: 4
   - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
     type: 5
     color: {r: 0.8156863, g: 1, b: 1, a: 1}
@@ -111,8 +111,8 @@ MonoBehaviour:
       min: 0
       max: 0
     numJumpgates:
-      min: 0
-      max: 0
+      min: 1
+      max: 4
   - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
     type: 3
     color: {r: 1, g: 1, b: 0, a: 1}
@@ -136,8 +136,8 @@ MonoBehaviour:
       min: 0
       max: 0
     numJumpgates:
-      min: 0
-      max: 0
+      min: 1
+      max: 4
   - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
     type: 2
     color: {r: 1, g: 0.35239166, b: 0, a: 1}
@@ -161,8 +161,8 @@ MonoBehaviour:
       min: 0
       max: 0
     numJumpgates:
-      min: 0
-      max: 0
+      min: 1
+      max: 4
   - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
     type: 1
     color: {r: 1, g: 0, b: 0, a: 1}
@@ -186,8 +186,8 @@ MonoBehaviour:
       min: 0
       max: 0
     numJumpgates:
-      min: 0
-      max: 0
+      min: 1
+      max: 4
   - prefab: {fileID: 6127089907976042786, guid: cb296412d4730f5498f07ebaf1a8857e, type: 3}
     type: 0
     color: {r: 0.49056602, g: 0, b: 0, a: 1}
@@ -211,5 +211,5 @@ MonoBehaviour:
       min: 0
       max: 0
     numJumpgates:
-      min: 0
-      max: 0
+      min: 1
+      max: 4
