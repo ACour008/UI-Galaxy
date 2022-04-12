@@ -107,6 +107,15 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PositionDelta"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""7f4eb2d6-a4c9-41c7-b25b-1aa42a8b814f"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -505,6 +514,17 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63f58fe2-8238-4b93-b3d0-1f560e22ab60"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PositionDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -522,6 +542,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         m_Mouse_ScrollWheel = m_Mouse.FindAction("ScrollWheel", throwIfNotFound: true);
         m_Mouse_Point = m_Mouse.FindAction("Point", throwIfNotFound: true);
         m_Mouse_Navigate = m_Mouse.FindAction("Navigate", throwIfNotFound: true);
+        m_Mouse_PositionDelta = m_Mouse.FindAction("PositionDelta", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -590,6 +611,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Mouse_ScrollWheel;
     private readonly InputAction m_Mouse_Point;
     private readonly InputAction m_Mouse_Navigate;
+    private readonly InputAction m_Mouse_PositionDelta;
     public struct MouseActions
     {
         private @InputControls m_Wrapper;
@@ -603,6 +625,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         public InputAction @ScrollWheel => m_Wrapper.m_Mouse_ScrollWheel;
         public InputAction @Point => m_Wrapper.m_Mouse_Point;
         public InputAction @Navigate => m_Wrapper.m_Mouse_Navigate;
+        public InputAction @PositionDelta => m_Wrapper.m_Mouse_PositionDelta;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -639,6 +662,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Navigate.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
                 @Navigate.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
                 @Navigate.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
+                @PositionDelta.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnPositionDelta;
+                @PositionDelta.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnPositionDelta;
+                @PositionDelta.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnPositionDelta;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -670,6 +696,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
+                @PositionDelta.started += instance.OnPositionDelta;
+                @PositionDelta.performed += instance.OnPositionDelta;
+                @PositionDelta.canceled += instance.OnPositionDelta;
             }
         }
     }
@@ -685,5 +714,6 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
+        void OnPositionDelta(InputAction.CallbackContext context);
     }
 }

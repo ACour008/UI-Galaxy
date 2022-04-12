@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PositionDelta",
+                    "type": "PassThrough",
+                    "id": "7f4eb2d6-a4c9-41c7-b25b-1aa42a8b814f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -483,6 +492,17 @@
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "63f58fe2-8238-4b93-b3d0-1f560e22ab60",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PositionDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
