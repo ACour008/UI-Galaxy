@@ -109,7 +109,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PositionDelta"",
+                    ""name"": ""DeltaPosition"",
                     ""type"": ""PassThrough"",
                     ""id"": ""7f4eb2d6-a4c9-41c7-b25b-1aa42a8b814f"",
                     ""expectedControlType"": ""Vector2"",
@@ -518,11 +518,33 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""63f58fe2-8238-4b93-b3d0-1f560e22ab60"",
-                    ""path"": ""<Pointer>/delta"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PositionDelta"",
+                    ""action"": ""DeltaPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""177f1ccf-17d6-4e41-b7cf-6d329de1d1f0"",
+                    ""path"": ""<Pen>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeltaPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7742c0bf-6255-4f29-8e9e-74080c584776"",
+                    ""path"": ""<Touchscreen>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeltaPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -542,7 +564,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         m_Mouse_ScrollWheel = m_Mouse.FindAction("ScrollWheel", throwIfNotFound: true);
         m_Mouse_Point = m_Mouse.FindAction("Point", throwIfNotFound: true);
         m_Mouse_Navigate = m_Mouse.FindAction("Navigate", throwIfNotFound: true);
-        m_Mouse_PositionDelta = m_Mouse.FindAction("PositionDelta", throwIfNotFound: true);
+        m_Mouse_DeltaPosition = m_Mouse.FindAction("DeltaPosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -611,7 +633,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Mouse_ScrollWheel;
     private readonly InputAction m_Mouse_Point;
     private readonly InputAction m_Mouse_Navigate;
-    private readonly InputAction m_Mouse_PositionDelta;
+    private readonly InputAction m_Mouse_DeltaPosition;
     public struct MouseActions
     {
         private @InputControls m_Wrapper;
@@ -625,7 +647,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         public InputAction @ScrollWheel => m_Wrapper.m_Mouse_ScrollWheel;
         public InputAction @Point => m_Wrapper.m_Mouse_Point;
         public InputAction @Navigate => m_Wrapper.m_Mouse_Navigate;
-        public InputAction @PositionDelta => m_Wrapper.m_Mouse_PositionDelta;
+        public InputAction @DeltaPosition => m_Wrapper.m_Mouse_DeltaPosition;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -662,9 +684,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Navigate.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
                 @Navigate.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
                 @Navigate.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
-                @PositionDelta.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnPositionDelta;
-                @PositionDelta.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnPositionDelta;
-                @PositionDelta.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnPositionDelta;
+                @DeltaPosition.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnDeltaPosition;
+                @DeltaPosition.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnDeltaPosition;
+                @DeltaPosition.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnDeltaPosition;
             }
             m_Wrapper.m_MouseActionsCallbackInterface = instance;
             if (instance != null)
@@ -696,9 +718,9 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
-                @PositionDelta.started += instance.OnPositionDelta;
-                @PositionDelta.performed += instance.OnPositionDelta;
-                @PositionDelta.canceled += instance.OnPositionDelta;
+                @DeltaPosition.started += instance.OnDeltaPosition;
+                @DeltaPosition.performed += instance.OnDeltaPosition;
+                @DeltaPosition.canceled += instance.OnDeltaPosition;
             }
         }
     }
@@ -714,6 +736,6 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         void OnScrollWheel(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
-        void OnPositionDelta(InputAction.CallbackContext context);
+        void OnDeltaPosition(InputAction.CallbackContext context);
     }
 }

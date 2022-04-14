@@ -968,9 +968,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d34155a1b2d4b4748b6a92294654fa7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 50
   minPosition: {x: 1, y: 0}
   maxPosition: {x: 230, y: 133}
+  zPosition: -10
 --- !u!224 &519420034
 RectTransform:
   m_ObjectHideFlags: 0

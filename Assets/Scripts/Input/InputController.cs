@@ -10,10 +10,8 @@ public class InputController : MonoBehaviour
 
     [Header("Camera Movement")]
     [SerializeField] CameraController cameraController;
-    private bool shouldUpdateCamera = false;
-    private Vector2 mouseOriginPosition;
-    private Vector2 mouseTargetPosition;
-    private Vector2 previousMosueDirection;
+    private InputAction.CallbackContext context;
+    private Vector2 prevPos;
 
 
     [Header("Raycast Info")]
@@ -26,16 +24,15 @@ public class InputController : MonoBehaviour
         raycaster = new InputRaycaster2D(inputControls, clickableTag);
 
     }
-    private void MiddleButton_canceled(InputAction.CallbackContext obj)
-    {
-        shouldUpdateCamera = false;
-        
-    }
 
-    private void MiddleButton_performed(InputAction.CallbackContext obj)
+    private void LateUpdate()
     {
-        mouseOriginPosition = inputControls.Mouse.Position.ReadValue<Vector2>();
-        shouldUpdateCamera = true;
+        bool mouseIsDown = context.performed;
+        if (mouseIsDown)
+        {
+            Vector2 deltaPosition = inputControls.Mouse.DeltaPosition.ReadValue<Vector2>();
+            cameraController.Move(deltaPosition);
+        }
     }
 
     private void OnLeftButtonClicked(InputAction.CallbackContext context)
@@ -48,7 +45,6 @@ public class InputController : MonoBehaviour
         }
     }
 
-
     private void OnDisable() => inputControls?.Disable();
 
     private void OnEnable() => inputControls?.Enable();
@@ -57,18 +53,12 @@ public class InputController : MonoBehaviour
     private void Start()
     {
         inputControls.Mouse.LeftButton.performed += OnLeftButtonClicked;
-        inputControls.Mouse.MiddleButton.performed += MiddleButton_performed;
-        inputControls.Mouse.MiddleButton.canceled += MiddleButton_canceled;
+        inputControls.Mouse.MiddleButton.started += MiddleButton_started;
 
     }
 
-    private void Update()
+    public void MiddleButton_started(InputAction.CallbackContext ctx)
     {
-        if (shouldUpdateCamera)
-        {
-            mouseTargetPosition = inputControls.Mouse.Position.ReadValue<Vector2>();
-            cameraController.Move(mouseOriginPosition, mouseTargetPosition);
-            
-        }
+        context = ctx;
     }
 }
