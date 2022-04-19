@@ -13,6 +13,10 @@ public class StarInfoPanel : MonoBehaviour
 
     [SerializeField] private SystemInfoTable table;
 
+    public void Start()
+    {
+        ClearAll();
+    }
 
     public void Star_OnClicked(object sender, System.EventArgs e)
     {
@@ -26,4 +30,16 @@ public class StarInfoPanel : MonoBehaviour
 
         table.Create(star);
     }
+
+    public void ClearAll()
+    {
+        nameText.text = "-";
+        typeText.text = "Star Type: -";
+        planetsText.text = "Planets: -";
+        jumpGatesText.text = "Jump gates: -";
+
+        table.Clear();
+    }
+
+
 }

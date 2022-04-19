@@ -17,7 +17,7 @@ public class SystemInfoTable : MonoBehaviour
     [SerializeField] private GameObjectPooler pooler;
     private List<GameObject> currentRows = new List<GameObject>();
 
-    private void Clear()
+    public void Clear()
     {
         currentPositionY = tableHeader.anchoredPosition.y - rowHeight;
         foreach (GameObject row in currentRows)

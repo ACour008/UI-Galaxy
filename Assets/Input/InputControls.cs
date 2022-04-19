@@ -73,15 +73,6 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Position"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""e51c95e0-ddde-49fe-8598-22e9324b9b94"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ScrollWheel"",
                     ""type"": ""PassThrough"",
                     ""id"": ""eac2218a-87d9-48ea-a076-ea55edff21fe"",
@@ -91,7 +82,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Point"",
+                    ""name"": ""Position"",
                     ""type"": ""PassThrough"",
                     ""id"": ""f10c1ba5-9722-4167-ad66-88bd6c2cd025"",
                     ""expectedControlType"": ""Vector2"",
@@ -115,7 +106,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -149,17 +140,6 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MiddleButton"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""62cdedbc-1280-4225-83bd-75b6c22cdfb5"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -214,7 +194,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Point"",
+                    ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -225,7 +205,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Point"",
+                    ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -236,7 +216,7 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Point"",
+                    ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -560,9 +540,8 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         m_Mouse_RightButton = m_Mouse.FindAction("RightButton", throwIfNotFound: true);
         m_Mouse_Submit = m_Mouse.FindAction("Submit", throwIfNotFound: true);
         m_Mouse_Cancel = m_Mouse.FindAction("Cancel", throwIfNotFound: true);
-        m_Mouse_Position = m_Mouse.FindAction("Position", throwIfNotFound: true);
         m_Mouse_ScrollWheel = m_Mouse.FindAction("ScrollWheel", throwIfNotFound: true);
-        m_Mouse_Point = m_Mouse.FindAction("Point", throwIfNotFound: true);
+        m_Mouse_Position = m_Mouse.FindAction("Position", throwIfNotFound: true);
         m_Mouse_Navigate = m_Mouse.FindAction("Navigate", throwIfNotFound: true);
         m_Mouse_DeltaPosition = m_Mouse.FindAction("DeltaPosition", throwIfNotFound: true);
     }
@@ -629,9 +608,8 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Mouse_RightButton;
     private readonly InputAction m_Mouse_Submit;
     private readonly InputAction m_Mouse_Cancel;
-    private readonly InputAction m_Mouse_Position;
     private readonly InputAction m_Mouse_ScrollWheel;
-    private readonly InputAction m_Mouse_Point;
+    private readonly InputAction m_Mouse_Position;
     private readonly InputAction m_Mouse_Navigate;
     private readonly InputAction m_Mouse_DeltaPosition;
     public struct MouseActions
@@ -643,9 +621,8 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         public InputAction @RightButton => m_Wrapper.m_Mouse_RightButton;
         public InputAction @Submit => m_Wrapper.m_Mouse_Submit;
         public InputAction @Cancel => m_Wrapper.m_Mouse_Cancel;
-        public InputAction @Position => m_Wrapper.m_Mouse_Position;
         public InputAction @ScrollWheel => m_Wrapper.m_Mouse_ScrollWheel;
-        public InputAction @Point => m_Wrapper.m_Mouse_Point;
+        public InputAction @Position => m_Wrapper.m_Mouse_Position;
         public InputAction @Navigate => m_Wrapper.m_Mouse_Navigate;
         public InputAction @DeltaPosition => m_Wrapper.m_Mouse_DeltaPosition;
         public InputActionMap Get() { return m_Wrapper.m_Mouse; }
@@ -672,15 +649,12 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Cancel.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnCancel;
                 @Cancel.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnCancel;
                 @Cancel.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnCancel;
-                @Position.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnPosition;
-                @Position.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnPosition;
-                @Position.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnPosition;
                 @ScrollWheel.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnScrollWheel;
                 @ScrollWheel.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnScrollWheel;
                 @ScrollWheel.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnScrollWheel;
-                @Point.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnPoint;
-                @Point.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnPoint;
-                @Point.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnPoint;
+                @Position.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnPosition;
+                @Position.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnPosition;
+                @Position.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnPosition;
                 @Navigate.started -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
                 @Navigate.performed -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
                 @Navigate.canceled -= m_Wrapper.m_MouseActionsCallbackInterface.OnNavigate;
@@ -706,15 +680,12 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
                 @Cancel.started += instance.OnCancel;
                 @Cancel.performed += instance.OnCancel;
                 @Cancel.canceled += instance.OnCancel;
-                @Position.started += instance.OnPosition;
-                @Position.performed += instance.OnPosition;
-                @Position.canceled += instance.OnPosition;
                 @ScrollWheel.started += instance.OnScrollWheel;
                 @ScrollWheel.performed += instance.OnScrollWheel;
                 @ScrollWheel.canceled += instance.OnScrollWheel;
-                @Point.started += instance.OnPoint;
-                @Point.performed += instance.OnPoint;
-                @Point.canceled += instance.OnPoint;
+                @Position.started += instance.OnPosition;
+                @Position.performed += instance.OnPosition;
+                @Position.canceled += instance.OnPosition;
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
@@ -732,9 +703,8 @@ public partial class @InputControls : IInputActionCollection2, IDisposable
         void OnRightButton(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
-        void OnPosition(InputAction.CallbackContext context);
         void OnScrollWheel(InputAction.CallbackContext context);
-        void OnPoint(InputAction.CallbackContext context);
+        void OnPosition(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
         void OnDeltaPosition(InputAction.CallbackContext context);
     }

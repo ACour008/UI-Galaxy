@@ -15,8 +15,6 @@ public class StarCreator : Creator, ICreator<StarData, Star>
             return null;
         }
 
-
-
         StarData data = dataManager.GetData<StarData>();
         float total = 0;
 

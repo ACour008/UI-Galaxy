@@ -51,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Position",
-                    "type": "PassThrough",
-                    "id": "e51c95e0-ddde-49fe-8598-22e9324b9b94",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ScrollWheel",
                     "type": "PassThrough",
                     "id": "eac2218a-87d9-48ea-a076-ea55edff21fe",
@@ -69,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Point",
+                    "name": "Position",
                     "type": "PassThrough",
                     "id": "f10c1ba5-9722-4167-ad66-88bd6c2cd025",
                     "expectedControlType": "Vector2",
@@ -93,7 +84,7 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -127,17 +118,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "MiddleButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "62cdedbc-1280-4225-83bd-75b6c22cdfb5",
-                    "path": "<Mouse>/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -192,7 +172,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Point",
+                    "action": "Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -203,7 +183,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Point",
+                    "action": "Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -214,7 +194,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Point",
+                    "action": "Position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

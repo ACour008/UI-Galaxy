@@ -11,8 +11,8 @@ public class InputController : MonoBehaviour
     [Header("Camera Movement")]
     [SerializeField] CameraController cameraController;
     private InputAction.CallbackContext context;
-    private Vector2 prevPos;
-
+    float inputTimer;
+    Vector2 lastDelta;
 
     [Header("Raycast Info")]
     [SerializeField] LayerMask hitLayers;
@@ -25,15 +25,9 @@ public class InputController : MonoBehaviour
 
     }
 
-    private void LateUpdate()
-    {
-        bool mouseIsDown = context.performed;
-        if (mouseIsDown)
-        {
-            Vector2 deltaPosition = inputControls.Mouse.DeltaPosition.ReadValue<Vector2>();
-            cameraController.Move(deltaPosition);
-        }
-    }
+    private void OnDisable() => inputControls?.Disable();
+
+    private void OnEnable() => inputControls?.Enable();
 
     private void OnLeftButtonClicked(InputAction.CallbackContext context)
     {
@@ -45,20 +39,32 @@ public class InputController : MonoBehaviour
         }
     }
 
-    private void OnDisable() => inputControls?.Disable();
+    public void OnMiddleButtonClicked(InputAction.CallbackContext ctx)
+    {
+        context = ctx;
+    }
 
-    private void OnEnable() => inputControls?.Enable();
-
+    private void OnWheelScrolled(InputAction.CallbackContext ctx)
+    {
+        float zoomLevel = ctx.ReadValue<Vector2>().y;
+        cameraController.Zoom(zoomLevel);
+    }
 
     private void Start()
     {
         inputControls.Mouse.LeftButton.performed += OnLeftButtonClicked;
-        inputControls.Mouse.MiddleButton.started += MiddleButton_started;
+        inputControls.Mouse.MiddleButton.started += OnMiddleButtonClicked;
+        inputControls.Mouse.ScrollWheel.performed += OnWheelScrolled;
 
     }
 
-    public void MiddleButton_started(InputAction.CallbackContext ctx)
+    private void Update()
     {
-        context = ctx;
+        bool mouseIsDown = context.performed;
+        if (mouseIsDown)
+        {
+            Vector2 mousePositionDelta = inputControls.Mouse.DeltaPosition.ReadValue<Vector2>();
+            cameraController.Move(mousePositionDelta);
+        }
     }
 }

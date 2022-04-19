@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Star : Orbital, IClickable
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject selectionIcon;
 
     private StarSettings data;
     private SystemType type;
@@ -16,13 +17,15 @@ public class Star : Orbital, IClickable
     private Vector3 localScale;
 
     private int numPlanets, numJumpGates;
-    [SerializeField] private List<JumpGate> jumpGates = new List<JumpGate>();
-    [SerializeField] private List<Planet> planets = new List<Planet>();
+    private List<JumpGate> jumpGates = new List<JumpGate>();
+    private List<Planet> planets = new List<Planet>();
 
     public event EventHandler OnClicked;
 
     private PlanetCreator planetCreator;
     private JumpGateCreator jumpGateCreator;
+
+    private static Star Selected;
 
     public SystemType Type { get => type; }
     public int PlanetCount { get => numPlanets; }
@@ -75,11 +78,18 @@ public class Star : Orbital, IClickable
 
     public void OnPointerClicked()
     {
+        Selected = this;
+
         foreach(Transform child in transform)
         {
             child.gameObject.SetActive(true);
         }
 
         OnClicked?.Invoke(this, new OnStarClickEventArgs { star = this });
+    }
+
+    private void Update()
+    {
+        selectionIcon.SetActive(Selected == this);
     }
 }
