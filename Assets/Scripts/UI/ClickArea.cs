@@ -5,8 +5,10 @@ using UnityEngine;
 public class ClickArea : MonoBehaviour, IClickable
 {
     [SerializeField] private StarInfoPanel infoPanel;
+    [SerializeField] private Selector selector;
     public void OnPointerClicked()
     {
         infoPanel.ClearAll();
+        selector.ClearSelected();
     }
 }

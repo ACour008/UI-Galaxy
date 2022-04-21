@@ -34,7 +34,7 @@ public class StarCreator : Creator, ICreator<StarData, Star>
                 GameObject gameObject = GameObject.Instantiate<GameObject>(setting.prefab, position, Quaternion.identity, parent);
                 Star newStar = gameObject.GetComponent<Star>();
                 
-                newStar.Init(setting, generateAll);
+                newStar.Init(position, setting, generateAll);
                 return newStar;
             }
             else

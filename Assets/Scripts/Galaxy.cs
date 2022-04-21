@@ -9,6 +9,7 @@ public class Galaxy:MonoBehaviour
     [SerializeField] private int seed;
 
     [SerializeField] private StarInfoPanel infoPanel; // for now;
+    [SerializeField] private Selector selector;
 
     private StarCreator starCreator;
 
@@ -36,7 +37,11 @@ public class Galaxy:MonoBehaviour
             {
                 Star star = starCreator.Create(xPosition, yPosition, this.transform, !discoveryMode);
 
-                if (star != null) star.OnClicked += infoPanel.Star_OnClicked;
+                if (star != null)
+                {
+                    star.OnClicked += infoPanel.Star_OnClicked;
+                    star.OnClicked += selector.Star_OnClicked;
+                }
             }
         }
     }

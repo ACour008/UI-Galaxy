@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -17,10 +15,12 @@ public class CameraController : MonoBehaviour
     [SerializeField] float zoomRate = 5f;
 
     private Camera mainCam;
+    private EventSystem eventSystem;
 
     private void Start()
     {
         mainCam = GetComponent<Camera>();
+        eventSystem = EventSystem.current;
     }
 
 
@@ -45,8 +45,6 @@ public class CameraController : MonoBehaviour
 
     public void Zoom(float zoomRate)
     {
-        Debug.Log(zoomRate);
-
         float rate = 1 + zoomRate * Time.unscaledDeltaTime;
         float target = Mathf.MoveTowards(mainCam.orthographicSize, mainCam.orthographicSize / rate, 0.1f);
         SetZoomLevel(Mathf.Clamp(target, zoomLevels.min, zoomLevels.max));
@@ -54,11 +52,13 @@ public class CameraController : MonoBehaviour
 
     public void OnZoomInButtonClicked(float zoomRate)
     {
+        eventSystem.SetSelectedGameObject(null);
         Zoom(zoomRate);
     }
 
     public void OnZoomOutButtonClicked(float zoomRate)
     {
+        eventSystem.SetSelectedGameObject(null);
 
         float rate = 1 + zoomRate * Time.unscaledDeltaTime;
         float target = Mathf.MoveTowards(mainCam.orthographicSize, mainCam.orthographicSize * rate, 0.1f);

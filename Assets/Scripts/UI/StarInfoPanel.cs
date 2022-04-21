@@ -18,10 +18,9 @@ public class StarInfoPanel : MonoBehaviour
         ClearAll();
     }
 
-    public void Star_OnClicked(object sender, System.EventArgs e)
+    public void Star_OnClicked(object sender, OnStarClickEventArgs eventArgs)
     {
-        OnStarClickEventArgs arg = e as OnStarClickEventArgs;
-        Star star = arg.star;
+        Star star = eventArgs.star;
 
         nameText.text = star.name;
         typeText.text = "Star Type: " + star.Type.ToString();
