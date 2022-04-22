@@ -12,7 +12,8 @@ public class CameraController : MonoBehaviour
     [Header("Zoom")]
     [SerializeField] float startZoomLevel = 5f;
     [SerializeField] MinMax<float> zoomLevels;
-    [SerializeField] float zoomRate = 5f;
+    private Vector2 previousPosition = Vector2.zero;
+    private bool shouldZoom = false;
 
     private Camera mainCam;
     private EventSystem eventSystem;
@@ -39,21 +40,30 @@ public class CameraController : MonoBehaviour
 
     private void SetZoomLevel(float zoomRate)
     {
-
         mainCam.orthographicSize = zoomRate;
     }
 
-    public void Zoom(float zoomRate)
+    public void Zoom(float zoomRate, Vector2 currentMousePosition)
     {
         float rate = 1 + zoomRate * Time.unscaledDeltaTime;
-        float target = Mathf.MoveTowards(mainCam.orthographicSize, mainCam.orthographicSize / rate, 0.1f);
-        SetZoomLevel(Mathf.Clamp(target, zoomLevels.min, zoomLevels.max));
+        float targetOrthoSize = Mathf.MoveTowards(mainCam.orthographicSize, mainCam.orthographicSize / rate, 0.1f);
+
+        currentMousePosition = mainCam.ScreenToWorldPoint(currentMousePosition);
+        Vector2 deltaPosition = previousPosition - currentMousePosition;
+
+        transform.position += new Vector3(deltaPosition.x, deltaPosition.y, 0);
+
+        SetZoomLevel(Mathf.Clamp(targetOrthoSize, zoomLevels.min, zoomLevels.max));
+        previousPosition = currentMousePosition;
     }
 
     public void OnZoomInButtonClicked(float zoomRate)
     {
         eventSystem.SetSelectedGameObject(null);
-        Zoom(zoomRate);
+
+        float rate = 1 + zoomRate * Time.unscaledDeltaTime;
+        float target = Mathf.MoveTowards(mainCam.orthographicSize, mainCam.orthographicSize / rate, 0.1f);
+        SetZoomLevel(Mathf.Clamp(target, zoomLevels.min, zoomLevels.max));
     }
 
     public void OnZoomOutButtonClicked(float zoomRate)

@@ -11,8 +11,7 @@ public class InputController : MonoBehaviour
     [Header("Camera Movement")]
     [SerializeField] CameraController cameraController;
     private InputAction.CallbackContext context;
-    float inputTimer;
-    Vector2 lastDelta;
+
 
     [Header("Raycast Info")]
     [SerializeField] LayerMask hitLayers;
@@ -47,7 +46,8 @@ public class InputController : MonoBehaviour
     private void OnWheelScrolled(InputAction.CallbackContext ctx)
     {
         float zoomLevel = ctx.ReadValue<Vector2>().y;
-        cameraController.Zoom(zoomLevel);
+        Vector2 mousePosition = inputControls.Mouse.Position.ReadValue<Vector2>();
+        cameraController.Zoom(zoomLevel, mousePosition);
     }
 
     private void Start()
@@ -55,7 +55,6 @@ public class InputController : MonoBehaviour
         inputControls.Mouse.LeftButton.performed += OnLeftButtonClicked;
         inputControls.Mouse.MiddleButton.started += OnMiddleButtonClicked;
         inputControls.Mouse.ScrollWheel.performed += OnWheelScrolled;
-
     }
 
     private void Update()
