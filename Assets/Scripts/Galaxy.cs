@@ -8,7 +8,7 @@ public class Galaxy:MonoBehaviour
     [SerializeField] private bool discoveryMode;
     [SerializeField] private int seed;
 
-    [SerializeField] private StarInfoPanel infoPanel; // for now;
+    [SerializeField] private StarInfoPanel infoPanel; // for now; this needs to go into a new class UIHandler maybe...?
     [SerializeField] private Selector selector;
 
     private StarCreator starCreator;
@@ -54,16 +54,13 @@ public class Galaxy:MonoBehaviour
             int sectorSizeY = 135;
 
             Gizmos.color = Color.yellow;
+            int maxSize = (int)Mathf.Max(sectorSizeX, sectorSizeY);
 
-            for (float x = 0f; x < sectorSizeX; x += 16)
+            for (float i = 0f; i <maxSize; i += 16f)
             {
-                Gizmos.DrawLine(new Vector3(x, 0), new Vector3(x, sectorSizeY));
-                
-            }
+                if (i < sectorSizeX) Gizmos.DrawLine(new Vector3(i, 0), new Vector3(i, sectorSizeY));
+                if (i < sectorSizeY) Gizmos.DrawLine(new Vector3(0, i), new Vector3(sectorSizeX, i));
 
-            for (float y = 0f; y < sectorSizeY; y += 16)
-            {
-                Gizmos.DrawLine(new Vector3(0, y), new Vector3(sectorSizeX, y));
             }
         }
     }

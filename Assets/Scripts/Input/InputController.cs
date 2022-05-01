@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 
 public class InputController : MonoBehaviour
 {
@@ -10,7 +12,7 @@ public class InputController : MonoBehaviour
 
     [Header("Camera Movement")]
     [SerializeField] CameraController cameraController;
-    private InputAction.CallbackContext context;
+    bool startDrag = false;
 
 
     [Header("Raycast Info")]
@@ -38,32 +40,38 @@ public class InputController : MonoBehaviour
         }
     }
 
-    public void OnMiddleButtonClicked(InputAction.CallbackContext ctx)
+    private void OnMiddleButtonCanceled(InputAction.CallbackContext context)
     {
-        context = ctx;
+        startDrag = false;
+        cameraController.ClearDragData();
     }
 
-    private void OnWheelScrolled(InputAction.CallbackContext ctx)
+    void OnMiddleButtonClickStarted(InputAction.CallbackContext context)
     {
-        float zoomLevel = ctx.ReadValue<Vector2>().y;
-        Vector2 mousePosition = inputControls.Mouse.Position.ReadValue<Vector2>();
-        cameraController.Zoom(zoomLevel, mousePosition);
+        cameraController.SetDragOrigin(inputControls.Mouse.Position.ReadValue<Vector2>());
+    }
+
+    private void OnWheelScrolled(InputAction.CallbackContext context)
+    {
+        float wheelDirection = context.ReadValue<Vector2>().normalized.y;
+        Vector3 mousePosition = inputControls.Mouse.Position.ReadValue<Vector2>();
+
+        cameraController.Zoom(wheelDirection, mousePosition);
     }
 
     private void Start()
     {
         inputControls.Mouse.LeftButton.performed += OnLeftButtonClicked;
-        inputControls.Mouse.MiddleButton.started += OnMiddleButtonClicked;
+
+        inputControls.Mouse.MiddleButton.started += OnMiddleButtonClickStarted;
+        inputControls.Mouse.MiddleButton.performed += (_) => startDrag = true;
+        inputControls.Mouse.MiddleButton.canceled += OnMiddleButtonCanceled;
+        
         inputControls.Mouse.ScrollWheel.performed += OnWheelScrolled;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        bool mouseIsDown = context.performed;
-        if (mouseIsDown)
-        {
-            Vector2 mousePositionDelta = inputControls.Mouse.DeltaPosition.ReadValue<Vector2>();
-            cameraController.Move(mousePositionDelta);
-        }
+        if (startDrag) cameraController.Move(inputControls.Mouse.Position.ReadValue<Vector2>());
     }
 }
