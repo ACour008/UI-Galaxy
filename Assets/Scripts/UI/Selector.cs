@@ -10,6 +10,11 @@ public class Selector : MonoBehaviour
         selectionObject.SetActive(false);
     }
 
+    public void ClearSelected()
+    {
+        selectionObject.SetActive(false);
+    }
+
     public void Star_OnClicked(object sender, OnStarClickEventArgs eventArgs)
     {
         Star selectedStar = eventArgs.star;
@@ -21,10 +26,5 @@ public class Selector : MonoBehaviour
         selectionObject.transform.localScale = new Vector3(clampedX, clampedY, 0);
         selectionObject.transform.position = selectedStar.Position;
         selectionObject.SetActive(true);
-    }
-
-    public void ClearSelected()
-    {
-        selectionObject.SetActive(false);
     }
 }

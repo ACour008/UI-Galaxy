@@ -10,5 +10,14 @@ public class ClickArea : MonoBehaviour, IClickable
     {
         infoPanel.ClearAll();
         selector.ClearSelected();
+
+        if (Galaxy.Stars != null)
+        {
+            foreach(Star s in Galaxy.Stars)
+            {
+                SpriteRenderer sr = s.transform.GetChild(0).GetComponent<SpriteRenderer>();
+                sr.color = s.Color;
+            }
+        }
     }
 }

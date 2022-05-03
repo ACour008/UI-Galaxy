@@ -6,7 +6,6 @@ public class CameraController : MonoBehaviour
 {
     [Header("Panning")]
     [SerializeField] MinMax<Vector2> panPositions;
-    [SerializeField] float speed = 0.3f;
     [SerializeField] float zPosition = -10f;
 
     Vector2 dragOrigin = Vector2.zero;

@@ -9,7 +9,7 @@ public class JumpGateCreator : Creator, ICreator<JumpGateData, JumpGate>
         this.dataManager = dataManager;
     }
 
-    public JumpGate Create(float x, float y, Transform parent, bool generateAll)
+    public JumpGate Create(float x, float y, float zoomFactor, Transform parent, bool generateAll)
     {
         JumpGateData data = dataManager.GetData<JumpGateData>();
 

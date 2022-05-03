@@ -9,7 +9,7 @@ public class PlanetCreator : Creator, ICreator<PlanetData, Planet>
         this.dataManager = dataManager;
     }
 
-    public Planet Create(float x, float y, Transform parent, bool generateAll)
+    public Planet Create(float x, float y, float zoomFactor, Transform parent, bool generateAll)
     {
         PlanetData data = dataManager.GetData<PlanetData>();
 

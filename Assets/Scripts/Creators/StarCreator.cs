@@ -8,7 +8,7 @@ public class StarCreator : Creator, ICreator<StarData, Star>
         this.dataManager = dataManager;
     }
 
-    public Star Create(float x, float y, Transform parent, bool generateAll = false)
+    public Star Create(float x, float y, float zoomFactor, Transform parent, bool generateAll = false)
     {
         bool starShouldExist = LehmerRNG.Next(0, 21) == 1;
         if (!starShouldExist) {
@@ -34,7 +34,7 @@ public class StarCreator : Creator, ICreator<StarData, Star>
                 GameObject gameObject = GameObject.Instantiate<GameObject>(setting.prefab, position, Quaternion.identity, parent);
                 Star newStar = gameObject.GetComponent<Star>();
                 
-                newStar.Init(position, setting, generateAll);
+                newStar.Init(position, zoomFactor, setting, generateAll);
                 return newStar;
             }
             else
