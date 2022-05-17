@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Orbital: MonoBehaviour
+public abstract class Orbital: OrbitalBase
 {
-    protected double radius;
-    protected double age;
     protected double temperature;
-    protected double mass;
-    public double orbitalDistance;
-
+    protected double solarMass;
+    protected double gravity;
+    protected double density;
+    protected double volume;
+    protected double orbitalDistance;
+    protected double orbitalPeriod;
+    protected double rotationSpeed;
     public double OrbitalDistance { get => orbitalDistance; }
 }

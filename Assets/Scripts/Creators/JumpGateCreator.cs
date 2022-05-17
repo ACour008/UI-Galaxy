@@ -9,11 +9,11 @@ public class JumpGateCreator : Creator, ICreator<JumpGateData, JumpGate>
         this.dataManager = dataManager;
     }
 
-    public JumpGate Create(float x, float y, float zoomFactor, Transform parent, bool generateAll)
+    public JumpGate Create(int id, float x, float y, IOrbital parent, bool generateAll = false)
     {
         JumpGateData data = dataManager.GetData<JumpGateData>();
 
-        GameObject gameObject = GameObject.Instantiate<GameObject>(data.Settings[0].prefab, parent);
+        GameObject gameObject = GameObject.Instantiate<GameObject>(data.Settings[0].prefab, parent.Transform);
         JumpGate jumpGate = gameObject.GetComponent<JumpGate>();
         gameObject.SetActive(false);
 

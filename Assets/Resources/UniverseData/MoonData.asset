@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b6a71f2eac4c534e9dc7c261f3377af, type: 3}
+  m_Name: MoonData
+  m_EditorClassIdentifier: 
+  settings:
+  - ageRange:
+      min: 0
+      max: 0
+    radiusRange:
+      min: 0
+      max: 0
+    solarMassRange:
+      min: 0
+      max: 0
+    orbitalDistance:
+      min: 0
+      max: 0
+    rotationSpeed:
+      min: 0
+      max: 0
+    prefab: {fileID: 5537164833761288066, guid: 896093d1fa5ca8a4e8bb2866cdc1f20e, type: 3}

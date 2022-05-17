@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class StarCreator : Creator, ICreator<StarData, Star>
@@ -8,14 +8,10 @@ public class StarCreator : Creator, ICreator<StarData, Star>
         this.dataManager = dataManager;
     }
 
-    public Star Create(float x, float y, float zoomFactor, Transform parent, bool generateAll = false)
+    public Star Create(int id, float x, float y, IOrbital parent, bool generateAll = false)
     {
-        bool starShouldExist = LehmerRNG.Next(0, 21) == 1;
-        if (!starShouldExist) {
-            return null;
-        }
-
         StarData data = dataManager.GetData<StarData>();
+
         float total = 0;
 
         foreach(StarSettings setting in data.Settings)
@@ -25,23 +21,39 @@ public class StarCreator : Creator, ICreator<StarData, Star>
 
         foreach(StarSettings setting in data.Settings)
         {
-            float chance = setting.chanceOfSpawn;
-            bool chanceSucceeds = LehmerRNG.NextDouble(0f, total) < chance;
+            bool chanceofSpawningSucceeds = LehmerRNG.NextDouble(0f, total) < setting.chanceOfSpawn;
 
-            if (chanceSucceeds)
+            if (chanceofSpawningSucceeds)
             {
                 Vector3 position = new Vector3(x, y);
-                GameObject gameObject = GameObject.Instantiate<GameObject>(setting.prefab, position, Quaternion.identity, parent);
+                GameObject gameObject = GameObject.Instantiate<GameObject>(setting.prefab, position, Quaternion.identity, parent.Transform);
                 Star newStar = gameObject.GetComponent<Star>();
+                Dictionary<int, int> planetSpawnChances = CreateDictFrom(data.MinChildren, data.MaxChildren, data.ChildrenSpawnChances);
+
+                newStar.Initialize(id, setting, parent, planetSpawnChances, generateAll);
                 
-                newStar.Init(position, zoomFactor, setting, generateAll);
+                
+                gameObject.SetActive(false);
                 return newStar;
             }
             else
             {
-                total -= chance;
+                total -= setting.chanceOfSpawn;
             }
         }
         return null;
+    }
+    public Dictionary<int, int> CreateDictFrom(int min, int max, List<int> spawnChances)
+    {
+        Dictionary<int, int> chances = new Dictionary<int, int>();
+
+        int curCount = min;
+        for (int i = 0; i < spawnChances.Count; i++)
+        {
+            chances[curCount] = spawnChances[i];
+            curCount++;
+        }
+
+        return chances;
     }
 }

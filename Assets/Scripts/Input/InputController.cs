@@ -12,14 +12,15 @@ public class InputController : MonoBehaviour
 
     [Header("Camera Movement")]
     [SerializeField] CameraController cameraController;
-    bool startDrag = false;
 
 
     [Header("Raycast Info")]
     [SerializeField] LayerMask hitLayers;
     [SerializeField] string clickableTag;
 
-    void Awake()
+    public Vector2 MousePosition { get => inputControls.Mouse.Position.ReadValue<Vector2>();  }
+
+    private void Awake()
     {
         inputControls = new InputControls();
         raycaster = new InputRaycaster2D(inputControls, clickableTag);
@@ -42,13 +43,13 @@ public class InputController : MonoBehaviour
 
     private void OnMiddleButtonCanceled(InputAction.CallbackContext context)
     {
-        startDrag = false;
-        cameraController.ClearDragData();
+        cameraController.StartDrag = false;
+        cameraController.Panner.ClearDragData();
     }
 
-    void OnMiddleButtonClickStarted(InputAction.CallbackContext context)
+    private void OnMiddleButtonClickStarted(InputAction.CallbackContext context)
     {
-        cameraController.SetDragOrigin(inputControls.Mouse.Position.ReadValue<Vector2>());
+        cameraController.Panner.SetDragOrigin(inputControls.Mouse.Position.ReadValue<Vector2>());
     }
 
     private void OnWheelScrolled(InputAction.CallbackContext context)
@@ -56,7 +57,7 @@ public class InputController : MonoBehaviour
         float wheelDirection = context.ReadValue<Vector2>().normalized.y;
         Vector3 mousePosition = inputControls.Mouse.Position.ReadValue<Vector2>();
 
-        cameraController.Zoom(wheelDirection, mousePosition);
+        cameraController.Zoomer.Zoom(wheelDirection, mousePosition);
     }
 
     private void Start()
@@ -64,14 +65,9 @@ public class InputController : MonoBehaviour
         inputControls.Mouse.LeftButton.performed += OnLeftButtonClicked;
 
         inputControls.Mouse.MiddleButton.started += OnMiddleButtonClickStarted;
-        inputControls.Mouse.MiddleButton.performed += (_) => startDrag = true;
+        inputControls.Mouse.MiddleButton.performed += (_) => cameraController.StartDrag = true;
         inputControls.Mouse.MiddleButton.canceled += OnMiddleButtonCanceled;
         
         inputControls.Mouse.ScrollWheel.performed += OnWheelScrolled;
-    }
-
-    private void LateUpdate()
-    {
-        if (startDrag) cameraController.Move(inputControls.Mouse.Position.ReadValue<Vector2>());
     }
 }

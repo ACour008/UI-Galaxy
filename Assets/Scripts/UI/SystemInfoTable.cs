@@ -28,26 +28,26 @@ public class SystemInfoTable : MonoBehaviour
         currentRows.Clear();
     }
 
-    public void Create(Star star)
+    public void Create(StarSystem system)
     {
         Clear();
 
-        CreateTableRow(star, currentPositionY);
+        //CreateTableRow(system, currentPositionY);
         currentPositionY -= rowHeight;
 
-        for (int p = 0; p < star.PlanetCount; p++)
+/*        for (int p = 0; p < system.Star.Planets.Count; p++)
         {
-            CreateTableRow(star.Planets[p], currentPositionY, "  ");
+            CreateTableRow(system.Planets[p], currentPositionY, "  ");
             currentPositionY -= rowHeight;
 
             // Do moons.
-        }
+        }*/
 
-        for (int j = 0; j < star.JumpGateCount; j++)
+/*        for (int j = 0; j < star.JumpGateCount; j++)
         {
             CreateTableRow(star.JumpGates[j], currentPositionY, "  ");
             currentPositionY -= rowHeight;
-        }
+        }*/
 
         SetTableContentHeight(); // own class prob;
     }

@@ -2,30 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GalaxyData", menuName = "Galaxy/StarSystemData")]
+[CreateAssetMenu(fileName = "GalaxyData", menuName = "Galaxy/StarData")]
 public class StarData : ScriptableObject, IData<StarSettings>
 {
+    [SerializeField] private MinMax<int> planetCountRange;
+    [SerializeField] private List<int> planetSpawnChances;
     [SerializeField] private List<StarSettings> settings;
 
     public List<StarSettings> Settings { get => settings; }
+    public List<int> ChildrenSpawnChances { get => planetSpawnChances; }
+    public int MaxChildren { get => planetCountRange.max; }
+    public int MinChildren { get => planetCountRange.min; }
 }
 
-
 [System.Serializable]
-public struct StarSettings
+public class StarSettings: OrbitalSettings
 {
     public GameObject prefab;
     public SystemType type;
     public Color color;
     public float chanceOfSpawn;
+    public MinMax<double> temperatureRange;
     public MinMax<float> prefabScaleRange;
-    public MinMax<double> radiusRange;
-    public MinMax<double> ageRange;
-    public MinMax<double> tempRangeInK;
-    public MinMax<double> massInKG;
     public MinMax<float> luminosityInMagnitude;
-    public MinMax<int> numJumpgates;
-
 }
 
 [System.Serializable]

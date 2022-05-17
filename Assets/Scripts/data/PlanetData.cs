@@ -5,32 +5,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Planet Info", menuName = "Galaxy/Planet Info")]
 public class PlanetData : ScriptableObject, IData<PlanetSettings>
 {
+    [SerializeField] private MinMax<int> moonCountRange;
+    [SerializeField] private List<int> moonSpawnChances;
     [SerializeField] private List<PlanetSettings> settings;
 
     public List<PlanetSettings> Settings { get => settings; }
+    public List<int> ChildrenSpawnChances { get =>moonSpawnChances; }
+    public int MaxChildren { get => moonCountRange.max; }
+    public int MinChildren { get => moonCountRange.min; }
 }
 
 [System.Serializable]
-public struct PlanetSettings
+public class PlanetSettings: OrbitalSettings
 {
     public PlanetType type;
     public float chanceOfSpawn;
     public GameObject prefab;
-    public MinMax<double> radiusRange;
-    public MinMax<double> ageRange;
-    public MinMax<double> temperatureRangeInC;
-    public MinMax<double> massRange;
-    public MinMax<double> distanceFromSuninKM;
+
+    // will be many sprite variations
     public List<Sprite> planetSprites;
 }
 
 public enum PlanetType
 {
-    ASTEROIDAL,
-    MERCURIAN,
-    SUBTERRAN,
-    TERRAN,
-    SUPERTERRAN,
+    GAS_GIANT,
     NEPTUNIAN,
-    JOVIAN
+    SUPER_TERRESTRIAL,
+    TERRESTRIAL
 }

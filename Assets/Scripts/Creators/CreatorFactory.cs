@@ -8,6 +8,9 @@ public class CreatorFactory:MonoBehaviour
     static StarCreator starCreator;
     static PlanetCreator planetCreator;
     static JumpGateCreator jumpGateCreator;
+    static StarSystemCreator systemCreator;
+    static MoonCreator moonCreator;
+    static SpaceStationCreator spacePortCreator;
 
     static DataManager dataManager;
 
@@ -35,6 +38,21 @@ public class CreatorFactory:MonoBehaviour
         {
             if (jumpGateCreator == null) jumpGateCreator = new JumpGateCreator(dataManager);
             return jumpGateCreator as JumpGateCreator;
+        }
+        else if (typeofT2 == typeof(StarSystem))
+        {
+            if (systemCreator == null) systemCreator = new StarSystemCreator(dataManager);
+            return systemCreator as StarSystemCreator;
+        }
+        else if (typeofT2 == typeof(Moon))
+        {
+            if (moonCreator == null) moonCreator = new MoonCreator(dataManager);
+            return moonCreator as MoonCreator;
+        }
+        else if (typeofT2 == typeof(SpaceStation))
+        {
+            if (spacePortCreator == null) spacePortCreator = new SpaceStationCreator(dataManager);
+            return spacePortCreator as SpaceStationCreator;
         }
 
         return null;

@@ -1,88 +1,121 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class Star : Orbital, IClickable
+public class Star : Orbital, IOrbital
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    private StarSettings data;
     private SystemType type;
-    private Vector3 position;
     private Color color;
+
     private double luminosity;
     private Vector3 localScale;
 
-    private int numPlanets, numJumpGates;
-    private List<JumpGate> jumpGates = new List<JumpGate>();
     private List<Planet> planets = new List<Planet>();
-
-    public event EventHandler<OnStarClickEventArgs> OnClicked;
+    private List<SpaceStation> stations = new List<SpaceStation>();
 
     private PlanetCreator planetCreator;
-    private JumpGateCreator jumpGateCreator;
+    private SpaceStationCreator stationCreator;
+    private float prefabScale;
 
+    public Transform Transform { get => this.transform; }
+    public Vector3 Position { get => transform.position; }
+    public float PrefabScale { get => prefabScale; }
     public SystemType Type { get => type; }
-    public Vector3 Position { get => position; }
-    public int PlanetCount { get => numPlanets; }
-    public int JumpGateCount { get => numJumpGates; }
     public List<Planet> Planets { get => planets; }
-    public List<JumpGate> JumpGates { get => jumpGates; }
     public Color Color { get => color; }
 
     private void Awake()
     {
         // spriteRenderer = GetComponent<SpriteRenderer>();
         planetCreator = (PlanetCreator)CreatorFactory.GetCreatorFor<Planet>();
-        jumpGateCreator = (JumpGateCreator)CreatorFactory.GetCreatorFor<JumpGate>();
+        stationCreator = (SpaceStationCreator)CreatorFactory.GetCreatorFor<SpaceStation>();
     }
 
-    public void Init(Vector3 position, float zoomFactor, StarSettings settings, bool generateAll)
+    public double ConfigOrbitalDistance(IOrbital parent)
     {
-        SetData(position, zoomFactor, settings);
+        StarSystem starSystem = parent.Transform.GetComponentInParent<StarSystem>();
+        return (starSystem.Type == StarSystemType.SINGLE) ? 0 : LehmerRNG.NextDouble(1.5e9, 3.5e9);        
+    }
 
-        numPlanets = Mathf.Max(LehmerRNG.Next(-1, 10), 1);
-        numJumpGates = LehmerRNG.Next(data.numJumpgates.min, data.numJumpgates.max);
+    public void CreateOrbitals(OrbitalSettings setting, IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll)
+    {
+        StarSettings settings = setting as StarSettings;
+
+        int numPlanets = GetNumberOfPlanets(childrenProbabilities);
+        int numStations = Mathf.Max(0, LehmerRNG.Next(-2, 1));
+        int maxLimit = Mathf.Max(numPlanets, numStations);
+        int planetCount = 0;
+        int stationCount = 0;
+
+        for (int i =0; i < maxLimit; i++)
+        {
+            if (planetCount < numPlanets)
+            {
+                Planet newPlanet = planetCreator.Create(i, 0, 0, this, generateAll);
+                planets.Add(newPlanet);
+                planetCount++;
+            }
+
+            if (stationCount < numStations)
+            {
+                SpaceStation newStation = stationCreator.Create(i, 0, 0, this, generateAll);
+                stations.Add(newStation);
+                stationCount++;
+            }
+        }
+    }
+
+    private int GetNumberOfPlanets(Dictionary<int, int> chances)
+    {
+        int total = 0;
+
+        foreach(KeyValuePair<int, int> pair in chances)
+        {
+            total += chances[pair.Key];
+        }
+
+        foreach (KeyValuePair<int, int> pair in chances)
+        {
+            int chance = chances[pair.Key];
+            bool chanceSucceeds = LehmerRNG.Next(0, total) < chance;
+
+            if (chanceSucceeds)
+            {
+                return pair.Key;
+            }
+
+            total -= chance;
+        }
+
+        // failsafe.
+        return 1;
+    }
+
+    public void Initialize(int id, OrbitalSettings orbitalSettings,  IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll)
+    {
+        StarSettings settings = orbitalSettings as StarSettings;
+        
+        this.id = id;
+        this.type = settings.type;
+        this.color = settings.color;
+        this.prefabScale = LehmerRNG.NextFloat(settings.prefabScaleRange.min, settings.prefabScaleRange.max);
+
+        name = $"Star_{id}";
+        age = LehmerRNG.NextDouble(settings.ageRange.min, settings.ageRange.max);
+        radius = LehmerRNG.NextDouble(settings.radiusRange.min, settings.radiusRange.max);
+        solarMass = LehmerRNG.NextDouble(settings.solarMassRange.min, settings.solarMassRange.max);
+        rotationSpeed = LehmerRNG.NextDouble(settings.rotationSpeedRange.min, settings.rotationSpeedRange.max);
+        temperature = LehmerRNG.NextDouble(settings.temperatureRange.min, settings.temperatureRange.max);
+        gravity = solarMass / Math.Pow(radius, 2);
+        volume = (4 / 3) * Math.PI * Math.Pow(radius, 3);
+        density = solarMass / volume;
+        orbitalPeriod = 0;
+        orbitalDistance = ConfigOrbitalDistance(parent);
 
         if (!generateAll) return;
-
-        for (int p = 0; p < numPlanets; p++)
-        {
-            Planet newPlanet = planetCreator.Create(0, 0, zoomFactor, this.transform, generateAll);
-            planets.Add(newPlanet);
-        }
-
-
-        for (int j = 0; j < numJumpGates; j++)
-        {
-            JumpGate newJumpGate = jumpGateCreator.Create(0, 0, zoomFactor, this.transform, generateAll);
-            jumpGates.Add(newJumpGate);
-        }
-    }
-
-    public void OnPointerClicked()
-    {
-        OnClicked?.Invoke(this, new OnStarClickEventArgs { star = this });
-    }
-
-    private void SetData(Vector3 position, float zoomFactor, StarSettings data)
-    {
-        float scaleXY = LehmerRNG.NextFloat(data.prefabScaleRange.min, data.prefabScaleRange.max);
-
-        this.position = position;
-        type = data.type;
-        color = data.color;
-        radius = LehmerRNG.NextDouble(data.radiusRange.min, data.radiusRange.max);
-        age = LehmerRNG.NextDouble(data.ageRange.min, data.ageRange.max);
-        temperature = LehmerRNG.NextDouble(data.tempRangeInK.min, data.tempRangeInK.max);
-        luminosity = LehmerRNG.NextDouble(data.luminosityInMagnitude.min, data.luminosityInMagnitude.max);
-        orbitalDistance = 0;
-
-        name = $"Star_{LehmerRNG.Next(0, 5000)}";
-        transform.position = this.position;
-        transform.localScale = new Vector3(scaleXY, scaleXY);
-        spriteRenderer.color = data.color;
+        CreateOrbitals(settings, parent, childrenProbabilities, generateAll);
     }
 
     public override string ToString() => name;

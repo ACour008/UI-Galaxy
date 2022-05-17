@@ -2,8 +2,6 @@
  * LehmerRNG courtesy of: https://docs.microsoft.com/en-us/archive/msdn-magazine/2016/august/test-run-lightweight-random-number-generation
  */
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LehmerRNG
@@ -49,25 +47,25 @@ public class LehmerRNG
         return (seed * 1.0) / m;
     }
 
-    public static int Next(int min, int maxExclusive)
+    public static int Next(int min, int max)
     {
-        double x = GetRandomNumber();
-        return (int)((maxExclusive - min) * x + min);
+        float x = (float)GetRandomNumber();
+        return Mathf.FloorToInt((max - min + 1) * x + min);
     }
 
-    public static double NextDouble(double min, double maxInclusive)
+    public static double NextDouble(double min, double max)
     {
         // make inclusive;
 
         double x = GetRandomNumber();
-        return (maxInclusive - min) * x + min;
+        return (max - min) * x + min;
     }
 
-    public static float NextFloat(float min, float maxInclusive)
+    public static float NextFloat(float min, float max)
     {
         // make inclusive;
-        double x = GetRandomNumber();
-        return (float)((maxInclusive - min) * x + min);
+        float x = (float)GetRandomNumber();
+        return (max - min) * x + min;
     }
 
 

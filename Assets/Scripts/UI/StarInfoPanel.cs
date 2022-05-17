@@ -18,16 +18,15 @@ public class StarInfoPanel : MonoBehaviour
         ClearAll();
     }
 
-    public void Star_OnClicked(object sender, OnStarClickEventArgs eventArgs)
+    public void Star_OnClicked(object sender, OnStarSystemClickEventArgs eventArgs)
     {
-        Star star = eventArgs.star;
+        StarSystem system = eventArgs.system;
 
-        nameText.text = star.name;
-        typeText.text = "Star Type: " + star.Type.ToString();
-        planetsText.text = "Planets: " + star.PlanetCount.ToString();
-        jumpGatesText.text = "Jump gates: " + star.JumpGateCount.ToString();
+        nameText.text = system.name;
+        typeText.text = "Star Type: " + system.Type.ToString();
+        // planetsText.text = "Planets: " + system.Star.Planets.Count.ToString();
 
-        table.Create(star);
+        table.Create(system);
     }
 
     public void ClearAll()
