@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarOLD : Orbital
+public class StarOLD
 {
     // Do i put localScaleRange in here too?? It is a property for the component
     // Position and color are in here. Why not scale?

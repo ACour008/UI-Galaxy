@@ -11,9 +11,9 @@ public class ClickArea : MonoBehaviour, IClickable
         infoPanel.ClearAll();
         selector.ClearSelected();
 
-        if (Galaxy.StarSystems != null)
+        if (Galaxy.StarSystemsDebug != null)
         {
-            foreach(StarSystem s in Galaxy.StarSystems)
+            foreach(StarSystem s in Galaxy.StarSystemsDebug)
             {
                 
                 s.ChangeColor(s.Color);

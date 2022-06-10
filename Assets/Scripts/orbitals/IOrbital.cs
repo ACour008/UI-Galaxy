@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IOrbital
-{
-    public Transform Transform { get; }
-    
-    public void Initialize(int id, OrbitalSettings setting, IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll);
+{ 
+    public void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll);
 
-    public void CreateOrbitals(OrbitalSettings setting, IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll);
+    public double Radius { get; }
+    public double Mass { get; }
 }

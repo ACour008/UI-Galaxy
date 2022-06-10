@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class JumpGate: Orbital
 {
     private JumpgateType type;
@@ -13,6 +12,8 @@ public class JumpGate: Orbital
 
     public int Home { get => home; }
     public int Destination { get => destination; }
+    public override double Radius { get => solarRadius * Utils.RO_EARTH; }
+    public override double Mass { get => solarMass * Utils.MO_EARTH; }
 
 
     private void Awake()
@@ -33,5 +34,9 @@ public class JumpGate: Orbital
         destination = toSystem.Id;
 
         this.gameObject.SetActive(true);
+    }
+
+    public override void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll)
+    {
     }
 }

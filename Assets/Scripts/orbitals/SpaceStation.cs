@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpaceStation : Orbital, IOrbital
+public class SpaceStation : Orbital
 {
-    public Transform Transform => this.transform;
+    public override double Radius { get => solarRadius * Utils.RO_EARTH; }
+    public override double Mass { get => solarMass * Utils.MO_EARTH; }
 
-    public void CreateOrbitals(OrbitalSettings setting, IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll)
-    {
-    }
-
-    public void Initialize(int id, OrbitalSettings setting, IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll)
+    public override void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll)
     {
     }
 }

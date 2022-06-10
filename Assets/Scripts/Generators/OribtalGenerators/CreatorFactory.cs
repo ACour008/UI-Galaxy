@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatorFactory:MonoBehaviour
+public class CreatorFactory: MonoBehaviour
 {
     static StarCreator starCreator;
     static PlanetCreator planetCreator;
@@ -19,7 +19,7 @@ public class CreatorFactory:MonoBehaviour
         dataManager = new DataManager();
     }
 
-    public static Creator GetCreatorFor<T2>()
+    public static Creator<T2> GetCreatorFor<T2>()
     {
 
         Type typeofT2 = typeof(T2);
@@ -27,32 +27,32 @@ public class CreatorFactory:MonoBehaviour
         if (typeofT2 == typeof(Star))
         {
             if (starCreator == null) starCreator = new StarCreator(dataManager);
-            return starCreator as StarCreator;
+            return starCreator as Creator<T2>;
         }
         else if (typeofT2 == typeof(Planet))
         {
             if (planetCreator == null) planetCreator = new PlanetCreator(dataManager);
-            return planetCreator as PlanetCreator;
+            return planetCreator as Creator<T2>;
         }
         else if (typeofT2 == typeof(JumpGate))
         {
             if (jumpGateCreator == null) jumpGateCreator = new JumpGateCreator(dataManager);
-            return jumpGateCreator as JumpGateCreator;
+            return jumpGateCreator as Creator<T2>;
         }
         else if (typeofT2 == typeof(StarSystem))
         {
             if (systemCreator == null) systemCreator = new StarSystemCreator(dataManager);
-            return systemCreator as StarSystemCreator;
+            return systemCreator as Creator<T2>;
         }
         else if (typeofT2 == typeof(Moon))
         {
             if (moonCreator == null) moonCreator = new MoonCreator(dataManager);
-            return moonCreator as MoonCreator;
+            return moonCreator as Creator<T2>;
         }
         else if (typeofT2 == typeof(SpaceStation))
         {
             if (spacePortCreator == null) spacePortCreator = new SpaceStationCreator(dataManager);
-            return spacePortCreator as SpaceStationCreator;
+            return spacePortCreator as Creator<T2>;
         }
 
         return null;

@@ -3,88 +3,69 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Planet : Orbital, IOrbital
+public class Planet : Orbital
 {
-    private PlanetType type;
-    private float atmosphericPressure;
-    private bool rings = false;
+    private static int idAssigner = -1;
+    private static double orbDistAssigner = 0;
 
-    private List<Moon> moons = new List<Moon>();
-    private List<SpaceStation> spaceStations = new List<SpaceStation>();
+    [SerializeField] private PlanetType type;
+    [SerializeField] private float atmosphericPressure;
+    [SerializeField] private double resources;
+    private Orbital parent;
+    private bool rings;
+
+    private List<Moon> moons;
     private MoonCreator moonCreator;
-    private SpaceStationCreator stationCreator;
 
-    public Transform Transform => this.transform;
-    public int MoonCount { get => moons.Count; }
-    public int PortCount { get => spaceStations.Count; }
+    public List<Moon> Moons { get => moons; }
+
+    public override double Radius { get => solarRadius * Utils.RO_EARTH; }
+    public override double Mass { get => solarMass * Utils.MO_EARTH; }
 
     private void Awake()
     {
-        moonCreator = (MoonCreator)CreatorFactory.GetCreatorFor<Moon>();
-        stationCreator = (SpaceStationCreator)CreatorFactory.GetCreatorFor<SpaceStation>();
-    }
-    public void CreateOrbitals(OrbitalSettings orbitalSettings, IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll)
-    {
-        PlanetSettings settings = orbitalSettings as PlanetSettings;
-
-        int numMoons = GetNumberOfMoons(childrenProbabilities);
-        int numPorts = (numMoons <= 1) ? Mathf.Max(0, LehmerRNG.Next(-2, 1)) : 0;
-        
-        int maxLimit = Mathf.Max(numMoons, numPorts);
-        int moonCount = 0;
-        int stationCount = 0;
-
-        for(int i = 0; i < maxLimit; i++)
-        {
-            if (moonCount < numMoons)
-            {
-                Moon newMoon = moonCreator.Create(i, 0, 0, this, generateAll);
-                moons.Add(newMoon);
-                moonCount++;
-            }
-
-            if (stationCount < numPorts)
-            {
-                SpaceStation newStation = stationCreator.Create(i, 0, 0, this, generateAll);
-                spaceStations.Add(newStation);
-                stationCount++;
-            }
-        }
+        moonCreator = CreatorFactory.GetCreatorFor<Moon>() as MoonCreator;
     }
 
-    private int GetNumberOfMoons(Dictionary<int, int> spawnChances)
+    public override void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll)
     {
-        int total = 0;
-
-        foreach (KeyValuePair<int, int> pair in spawnChances)
-        {
-            total += spawnChances[pair.Key];
-        }
-
-        foreach (KeyValuePair<int, int> pair in spawnChances)
-        {
-            int chance = spawnChances[pair.Key];
-            bool chanceSucceeds = LehmerRNG.Next(0, total) < chance;
-            if (chanceSucceeds)
-            {
-                return pair.Key;
-            }
-
-            total -= chance;
-        }
-
-        // failsafe
-        return 1;
-    }
-
-    public void Initialize(int id, OrbitalSettings orbitalSettings, IOrbital parent, Dictionary<int, int> childrenProbabilities, bool generateAll)
-    {
-        PlanetSettings settings = orbitalSettings as PlanetSettings;
-        this.id = id;
+        PlanetSettings settings = setting as PlanetSettings;
+        this.id = ++idAssigner;
         this.type = settings.type;
+        this.parent = parent;
+        this.resources = Utils.DistributeRandomness(120000, 500000000, 20);
+
+        this.age = Utils.DistributeRandomness(setting.ageRange.min, setting.ageRange.max, 20);
+        this.solarRadius = Utils.DistributeRandomness(setting.solarRadiusRange.min, setting.solarRadiusRange.max, 20);
+        this.solarMass = Utils.DistributeRandomness(setting.solarMassRange.min, solarRadius * 1.05, 20);
+        this.rotationSpeed = Utils.DistributeRandomness(setting.rotationSpeedRange.min, setting.rotationSpeedRange.max, 20);
+
+        double mass = solarMass * Utils.MO_EARTH;
+        double radius = solarRadius * Utils.RO_EARTH * 1000;
+        
+        gravity = Utils.GRAVITATIONAL_CONSTANT * (mass / Math.Pow(radius, 2));
+        volume = (4 / 3) * Math.PI * Math.Pow(radius, 3);
+        density = (mass / 100) / volume;
+
+        orbDistAssigner += Utils.DistributeRandomness(100000, 60000000, 20);
+        orbitalDistance = orbDistAssigner;
+
+        orbitalPeriod = Math.Sqrt((4 * Math.Pow(Math.PI, 2) * Math.Pow(radius, 3)) / Utils.GRAVITATIONAL_CONSTANT * parent.Mass);
+
+        // temp
+
+
+        this.rings = (LehmerRNG.Next(0, 1) > 0.15) ? true : false;
+
+
 
         if (!generateAll) return;
+        moons = moonCreator.CreateOrbitals(this, generateAll);
+    }
 
-        CreateOrbitals(settings, parent, childrenProbabilities, generateAll);
+    public static void ResetCounters()
+    {
+        idAssigner = -1;
+        orbDistAssigner = 0;
     }
 }

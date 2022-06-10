@@ -18,14 +18,14 @@ MonoBehaviour:
   moonSpawnChances: 0f00000019000000190000000f00000008000000080000000200000002000000
   settings:
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 13000000
+      max: 12700000000
+    solarRadiusRange:
+      min: 3.9
+      max: 17.92
     solarMassRange:
-      min: 0
-      max: 0
+      min: 5
+      max: 40
     orbitalPeriod:
       min: 0
       max: 0
@@ -40,14 +40,14 @@ MonoBehaviour:
     prefab: {fileID: 1973902353573072609, guid: a9fa8288eb050984496f79a903f148e2, type: 3}
     planetSprites: []
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 9300000
+      max: 10000000000
+    solarRadiusRange:
+      min: 0.54
+      max: 3.9
     solarMassRange:
-      min: 0
-      max: 0
+      min: 2
+      max: 4
     orbitalPeriod:
       min: 0
       max: 0
@@ -62,14 +62,14 @@ MonoBehaviour:
     prefab: {fileID: 1973902353573072609, guid: a9fa8288eb050984496f79a903f148e2, type: 3}
     planetSprites: []
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 5000000
+      max: 6000000000
+    solarRadiusRange:
+      min: 1.5
+      max: 17
     solarMassRange:
-      min: 0
-      max: 0
+      min: 0.8
+      max: 10
     orbitalPeriod:
       min: 0
       max: 0
@@ -84,14 +84,14 @@ MonoBehaviour:
     prefab: {fileID: 1973902353573072609, guid: a9fa8288eb050984496f79a903f148e2, type: 3}
     planetSprites: []
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 4000000
+      max: 11200000000
+    solarRadiusRange:
+      min: 0.868
+      max: 1.5
     solarMassRange:
-      min: 0
-      max: 0
+      min: 0.05
+      max: 1.5
     orbitalPeriod:
       min: 0
       max: 0

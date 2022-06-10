@@ -18,45 +18,14 @@ MonoBehaviour:
   planetSpawnChances: 050000000a0000001400000019000000140000000a0000000200000002000000020000000200000002000000
   settings:
   - ageRange:
-      min: 10000000
-      max: 99999999
-    radiusRange:
-      min: 4591620000
-      max: 6957000000
+      min: 1000000
+      max: 4500000
+    solarRadiusRange:
+      min: 6.6
+      max: 32
     solarMassRange:
-      min: 0
-      max: 0
-    orbitalPeriod:
-      min: 0
-      max: 0
-    orbitalDistance:
-      min: 0
-      max: 0
-    rotationSpeedRange:
-      min: 0
-      max: 0
-    prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
-    type: 7
-    color: {r: 0, g: 0.8, b: 1, a: 1}
-    chanceOfSpawn: 0.01
-    temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.99
-      max: 1.12
-    luminosityInMagnitude:
-      min: 30000
-      max: 100000
-  - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
-    solarMassRange:
-      min: 0
-      max: 0
+      min: 16
+      max: 30
     orbitalPeriod:
       min: 0
       max: 0
@@ -68,26 +37,23 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 6
-    color: {r: 0.49803922, g: 1, b: 1, a: 1}
+    color: {r: 0, g: 0.49019608, b: 1, a: 1}
     chanceOfSpawn: 0.01
     temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.84
-      max: 0.98
+      min: 30000
+      max: 50000
     luminosityInMagnitude:
-      min: 0
-      max: 0
+      min: 30000
+      max: 100000
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 500000
+      max: 1000000
+    solarRadiusRange:
+      min: 1.8
+      max: 6.6
     solarMassRange:
-      min: 0
-      max: 0
+      min: 2.1
+      max: 16
     orbitalPeriod:
       min: 0
       max: 0
@@ -99,26 +65,23 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 5
-    color: {r: 0.8156863, g: 1, b: 1, a: 1}
+    color: {r: 0.7216981, g: 0.942157, b: 1, a: 1}
     chanceOfSpawn: 0.01
     temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.69
-      max: 0.83
+      min: 10000
+      max: 25000
     luminosityInMagnitude:
-      min: 0
-      max: 0
+      min: 25
+      max: 30000
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 500000
+      max: 1000000
+    solarRadiusRange:
+      min: 1.4
+      max: 1.8
     solarMassRange:
-      min: 0
-      max: 0
+      min: 1.4
+      max: 2.1
     orbitalPeriod:
       min: 0
       max: 0
@@ -130,26 +93,23 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 4
-    color: {r: 1, g: 1, b: 0.49803922, a: 1}
-    chanceOfSpawn: 0.02
+    color: {r: 0.9386792, g: 1, b: 1, a: 1}
+    chanceOfSpawn: 0.01
     temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.54
-      max: 0.68
+      min: 7400
+      max: 10000
     luminosityInMagnitude:
-      min: 0
-      max: 0
+      min: 5
+      max: 25
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 2000000000
+      max: 4000000000
+    solarRadiusRange:
+      min: 1.15
+      max: 1.4
     solarMassRange:
-      min: 0
-      max: 0
+      min: 1.04
+      max: 1.4
     orbitalPeriod:
       min: 0
       max: 0
@@ -161,26 +121,23 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 3
-    color: {r: 1, g: 1, b: 0, a: 1}
-    chanceOfSpawn: 0.04
+    color: {r: 1, g: 1, b: 0.9481132, a: 1}
+    chanceOfSpawn: 0.02
     temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.39
-      max: 0.53
+      min: 6000
+      max: 7400
     luminosityInMagnitude:
-      min: 0
-      max: 0
+      min: 1.5
+      max: 5
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 3500000000
+      max: 10000000000
+    solarRadiusRange:
+      min: 0.96
+      max: 1.15
     solarMassRange:
-      min: 0
-      max: 0
+      min: 0.8
+      max: 1.04
     orbitalPeriod:
       min: 0
       max: 0
@@ -192,26 +149,23 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 2
-    color: {r: 1, g: 0.35239166, b: 0, a: 1}
-    chanceOfSpawn: 0.08
+    color: {r: 1, g: 1, b: 0.504717, a: 1}
+    chanceOfSpawn: 0.04
     temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.24
-      max: 0.38
+      min: 5000
+      max: 6000
     luminosityInMagnitude:
-      min: 0
-      max: 0
+      min: 0.6
+      max: 1.5
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 18000000000
+      max: 34000000000
+    solarRadiusRange:
+      min: 0.7
+      max: 0.96
     solarMassRange:
-      min: 0
-      max: 0
+      min: 0.45
+      max: 0.8
     orbitalPeriod:
       min: 0
       max: 0
@@ -223,26 +177,23 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 1
-    color: {r: 1, g: 0, b: 0, a: 1}
-    chanceOfSpawn: 0.8
+    color: {r: 1, g: 0.674681, b: 0, a: 1}
+    chanceOfSpawn: 0.08
     temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.15
-      max: 0.23
+      min: 3500
+      max: 5200
     luminosityInMagnitude:
-      min: 0
-      max: 0
+      min: 0.08
+      max: 0.6
   - ageRange:
-      min: 0
-      max: 0
-    radiusRange:
-      min: 0
-      max: 0
+      min: 34000000000
+      max: 60000000000
+    solarRadiusRange:
+      min: 0.1
+      max: 0.7
     solarMassRange:
-      min: 0
-      max: 0
+      min: 0.08
+      max: 0.45
     orbitalPeriod:
       min: 0
       max: 0
@@ -254,14 +205,11 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 0
-    color: {r: 0.49056602, g: 0, b: 0, a: 1}
-    chanceOfSpawn: 0.03
+    color: {r: 0.8509804, g: 0.21960784, b: 0.11764706, a: 1}
+    chanceOfSpawn: 0.8
     temperatureRange:
-      min: 0
-      max: 0
-    prefabScaleRange:
-      min: 0.1
-      max: 0.14
+      min: 2500
+      max: 3000
     luminosityInMagnitude:
-      min: 0
-      max: 0
+      min: 0.01
+      max: 0.08

@@ -14,17 +14,9 @@ public class LehmerRNG
 
     private static LehmerRNG instance = null;
 
-    public LehmerRNG(int seed) {
-
-        if (seed < 0 || seed == int.MaxValue)
-        {
-            LehmerRNG.seed = Mathf.Abs((int)long.Parse(System.DateTime.Now.ToString("yyyyMMddHHmmss")));
-        }
-        else
-        {
-            LehmerRNG.seed = seed;
-        }
-
+    public LehmerRNG(int seed)
+    {
+        LehmerRNG.seed = seed;
     }
 
     public static void Initialize(int seed)
@@ -50,22 +42,17 @@ public class LehmerRNG
     public static int Next(int min, int max)
     {
         float x = (float)GetRandomNumber();
-        return Mathf.FloorToInt((max - min + 1) * x + min);
+        return Mathf.FloorToInt((max - min) * x + min);
     }
 
     public static double NextDouble(double min, double max)
     {
-        // make inclusive;
-
-        double x = GetRandomNumber();
-        return (max - min) * x + min;
+        return (max - min) * GetRandomNumber() + min;
     }
 
     public static float NextFloat(float min, float max)
     {
-        // make inclusive;
-        float x = (float)GetRandomNumber();
-        return (max - min) * x + min;
+        return (max - min) * (float)GetRandomNumber() + min;
     }
 
 

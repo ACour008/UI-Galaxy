@@ -1,26 +1,31 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DataManager
 {
-    private ScriptableObject[] allData;
+    private Dictionary<System.Type, OrbitalData> allData = new Dictionary<System.Type, OrbitalData>();
 
     public DataManager()
     {
-        allData = Resources.LoadAll<ScriptableObject>("UniverseData");
+        
+        OrbitalData[] loadedData = Resources.LoadAll<OrbitalData>("UniverseData");
+
+        for(int i = 0; i < loadedData.Length; i++)
+        {
+            OrbitalData data = loadedData[i];
+            Type dataType = data.GetType();
+
+            data.TotalSpawnChances();
+            allData.Add(dataType, loadedData[i]);
+        }
+        
+
     }
 
     public T GetData<T>() where T : class
     {
-        foreach(var data in allData)
-        {
-            if (data.GetType() == typeof(T))
-            {
-                return data as T;
-            } 
-        }
-
-        return default(T);
+        Type dataType = typeof(T);
+        return allData[dataType] as T;
     }
 }
