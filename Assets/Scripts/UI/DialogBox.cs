@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class DialogBox : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI starName;
-    [SerializeField] private TextMeshProUGUI government;
+    [SerializeField] private ScrollRect scrollRect;
+    [SerializeField] private Vector3 offset;
     [SerializeField] private TextMeshProUGUI systemType;
     [SerializeField] private TextMeshProUGUI jumpGateCount;
+    [SerializeField] private TextMeshProUGUI age;
 
     private RectTransform rectTransform;
     private MinMax<Vector2> positionMinMax;
@@ -30,15 +32,14 @@ public class DialogBox : MonoBehaviour
     }
     public void SetPosition(Vector3 newPosition)
     {
-        transform.position = newPosition;
+        transform.position = newPosition + offset;
     }
  
-    public void SetTexts(string starNameText, string factionText, StarSystemType systemType, int jumpGateCount)
+    public void SetDataFrom(StarSystem starSystem)
     {
-        starName.text = starNameText;
-        government.text = $"Gov't: {factionText}";
-        this.systemType.text = $"System Type: {systemType.ToString()}";
-        this.jumpGateCount.text = $"Jumpgate Count: {jumpGateCount.ToString()}";
+        this.systemType.text = starSystem.Type.ToString();
+        this.jumpGateCount.text = starSystem.JumpGateCount.ToString();
+        this.age.text = Utils.Conversions.ConvertNumber(starSystem.Age, 1e9);
     }
 
     private void Update()

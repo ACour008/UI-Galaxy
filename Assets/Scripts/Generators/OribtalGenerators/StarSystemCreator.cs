@@ -43,9 +43,7 @@ public class StarSystemCreator : Creator<StarSystem>
             StarSystem starSystem = Create(i, xPosition, yPosition, parent, nameGenerator, !discoveryMode);
 
             if (starSystem != null)
-            {
-                starSystem.OnClicked += this.selector.Star_OnClicked;
-                
+            {                
                 galaxyHash.Add(starSystem);
             }
         }

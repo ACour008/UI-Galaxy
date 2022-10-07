@@ -37,6 +37,20 @@ namespace Utils
             return String.Format("#,0", km);
         }
 
+        public static string ConvertNumber(double number, double factor)
+        {
+            return string.Format("{0:0.##}", number / factor);
+        }
+
+        public static string ConvertNumber(float number, float factor) {
+            return string.Format("{0:0.##}", number / factor);
+        }
+
+        public static string ConvertNumber(int number, int factor)
+        {
+            return string.Format("{0:0.##}", number / factor);
+        }
+
         public static double DistributeRandomness(double min, double max, int limit)
         {
             double result = 0;

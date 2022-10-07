@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (startDrag) panner?.Pan(input.MousePosition);
+        if (startDrag) panner?.Pan(Mouse.current.position.ReadValue());
     }
 
     private void Start()

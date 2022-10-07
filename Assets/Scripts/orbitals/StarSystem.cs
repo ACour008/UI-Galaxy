@@ -1,44 +1,35 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DelaunatorSharp;
 
-public class StarSystem : Orbital, IClickable
+public class StarSystem : Orbital
 {
-    [SerializeField] private StarSystemType type;
-
     private static int idAssigner = -1;
-
+    
+    [SerializeField] private StarSystemType type;
     private StarCreator starCreator;
     private SpriteRenderer spriteRenderer;
-
     private List<Star> stars;
     private List<JumpGate> jumpGates = new List<JumpGate>();
-
     [SerializeField] private int numJumpGates = 0;
     [SerializeField] private int maxJumpGates = 0;
-
     private int orbitalCount;
     private Government government;
 
-    public event EventHandler<OnStarSystemClickEventArgs> OnClicked;
-
+    #region Fields
     public Vector3 Position { get => transform.position; set => transform.position = value; }
     public int OrbitalCount { get => orbitalCount;}
     public List<JumpGate> JumpGates { get => jumpGates; }
     public int JumpGateCount { get => numJumpGates; }
     public int MaxJumpGates { get => maxJumpGates; }
-
-    // prob turn to actual object when fully implemented.
-    public string Government {get => this.government.Name; }
-
+    public string Government {get => this.government.Name; }     // prob turn to actual object when fully implemented.
     public Color Color { get => CombineColors(); }
     public StarSystemType Type { get => this.type; }
     public double Age { get => age; }
     public int Id { get => id; }
     public override double Radius { get => solarRadius; }
     public override double Mass { get => solarMass; }
+    #endregion
 
     public void Awake()
     {
@@ -83,8 +74,6 @@ public class StarSystem : Orbital, IClickable
         float scale = DetermineScale();
         transform.localScale = new Vector3(scale, scale, 0);
         spriteRenderer.color = CombineColors();
-
-
     }
 
     private float DetermineScale()
@@ -97,11 +86,6 @@ public class StarSystem : Orbital, IClickable
         }
 
         return Mathf.Clamp(largestSystem / 10, 0.1f, 1f);
-    }
-
-    public void OnPointerClicked()
-    {
-        OnClicked?.Invoke(this, new OnStarSystemClickEventArgs { system = this });
     }
 
     public void SetRadius(double radius)

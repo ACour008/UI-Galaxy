@@ -3,17 +3,25 @@ using Conversions;
 
 public class UISelector : MonoBehaviour
 {
+    public static UISelector instance;
+
     [SerializeField] private Camera uiCamera;
+    [SerializeField] private SolarDataHUD solarDataHUD;
     [SerializeField] private GameObject selectionIcon;
     [SerializeField] private DialogBox dialogBox;
-    [SerializeField] private Vector3 dialogOffset;
     [SerializeField] private Vector2 offScreenThreshold;
     [SerializeField] private MinMax<float> selectionSizes;
     [SerializeField] private StarSystem currentSelected;
 
+    public StarSystem CurrentSystem { get => currentSelected; }
+    public bool IsActive { get => isActive; }
+
     RectTransform iconRectTransform;
     Renderer currentSelectedRenderer;
     MinMax<Vector2> screenBoundaries;
+    bool isActive;
+
+
 
     void Start()
     {
@@ -26,15 +34,31 @@ public class UISelector : MonoBehaviour
         ClearSelected();
     }
 
+    void OnEnable() {
+        if (instance == null) {
+            instance = this;
+        }
+    }
+
+    void OnDisable() {
+        if (instance != null) {
+            instance = null;
+        }
+    }
+
     public void ClearSelected(bool clearSelected = true)
     {
         selectionIcon.gameObject.SetActive(false);
-        dialogBox.gameObject.SetActive(false);
+        dialogBox.SetActive(false);
+        solarDataHUD.SetActive(false);
+
         if (clearSelected)
         {
             currentSelected = null;
             currentSelectedRenderer = null;
         }
+
+        isActive = false;
     }
 
     public void Star_OnClicked(object sender, OnStarSystemClickEventArgs eventArgs)
@@ -47,26 +71,42 @@ public class UISelector : MonoBehaviour
             return;
         }
 
-        dialogBox.SetTexts(selectedSystem.name, selectedSystem.Government, selectedSystem.Type, selectedSystem.JumpGateCount);    
         SetSelected(selectedSystem);
     }
 
-    private void SetSelected(StarSystem selectedSystem)
+    public void SetSelected(StarSystem selectedSystem)
     {
         currentSelected = selectedSystem;
         currentSelectedRenderer = currentSelected.GetComponent<Renderer>();
-        
-        Vector3 starScale = currentSelected.transform.localScale;
-        Vector3 targetPosition = uiCamera.WorldToScreenPoint(currentSelected.Position);
-        float clampedX = Mathf.Clamp(starScale.x, selectionSizes.min, selectionSizes.max);
-        float clampedY = Mathf.Clamp(starScale.y, selectionSizes.min, selectionSizes.max);
 
-        iconRectTransform.localScale = new Vector3(clampedX, clampedY, 0);
-        selectionIcon.transform.position = targetPosition;
-        dialogBox.SetPosition(targetPosition + dialogOffset);
+        iconRectTransform.localScale = GetScaleSize();
+
+        SetHUDPositions();
+
+        solarDataHUD.SetDataFrom(currentSelected);
+        dialogBox.SetDataFrom(currentSelected);
 
         selectionIcon.gameObject.SetActive(true);
         dialogBox.SetActive(true);
+        solarDataHUD.SetActive(true);
+        isActive = true;
+    }
+
+    private void SetHUDPositions()
+    {
+        Vector3 targetPosition = uiCamera.WorldToScreenPoint(currentSelected.Position);
+        selectionIcon.transform.position = currentSelected.Position;
+        dialogBox.SetPosition(currentSelected.Position);
+        solarDataHUD.SetPosition(currentSelected.Position);
+    }
+
+    private Vector3 GetScaleSize()
+    {
+        // Need to account for camera ortho size.
+        Vector3 starScale = currentSelected.transform.localScale;
+        float clampedX = Mathf.Clamp(starScale.x, selectionSizes.min, selectionSizes.max);
+        float clampedY = Mathf.Clamp(starScale.y, selectionSizes.min, selectionSizes.max);
+        return new Vector3(clampedX, clampedY, 0);
     }
 
     private void Update() {
@@ -88,9 +128,10 @@ public class UISelector : MonoBehaviour
         
         // WHY IS THIS BACKWARDS
         if (screenPosition.x < screenBoundaries.min.x || screenPosition.x > screenBoundaries.max.x ||
-            screenPosition.y < screenBoundaries.min.y || screenPosition.y > screenBoundaries.max.y) {
-                return true;
-            }
+            screenPosition.y < screenBoundaries.min.y || screenPosition.y > screenBoundaries.max.y)
+        {
+            return true;
+        }
 
         return false;
     }
