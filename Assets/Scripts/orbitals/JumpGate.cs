@@ -12,8 +12,8 @@ public class JumpGate: Orbital
 
     public int Home { get => home; }
     public int Destination { get => destination; }
-    public override double Radius { get => solarRadius * Utils.RO_EARTH; }
-    public override double Mass { get => solarMass * Utils.MO_EARTH; }
+    public override double Radius { get => solarRadius * Utils.Conversions.RO_EARTH; }
+    public override double Mass { get => solarMass * Utils.Conversions.MO_EARTH; }
 
 
     private void Awake()
@@ -36,7 +36,7 @@ public class JumpGate: Orbital
         this.gameObject.SetActive(true);
     }
 
-    public override void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll)
+    public override void Initialize(OrbitalSettings setting, Orbital parent, Government government, string name, bool generateAll)
     {
     }
 }

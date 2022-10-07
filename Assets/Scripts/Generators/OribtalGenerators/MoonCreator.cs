@@ -6,21 +6,21 @@ public class MoonCreator : Creator<Moon>
 {
     public MoonCreator(DataManager dataManager) : base(dataManager) { }
 
-    public override List<Moon> CreateOrbitals(Orbital parent, bool generateAll)
+    public override List<Moon> CreateOrbitals(Orbital parent, Government government, string name, bool generateAll)
     {
         List<Moon> moons = new List<Moon>();
 
         int numMoons = CalculateNumMoons();
         for(int i = 0; i < numMoons; i++)
         {
-            Moon newMoon = Create(i, 0, 0, parent, generateAll);
+            Moon newMoon = Create(i, 0, 0, parent, government, name, generateAll);
             moons.Add(newMoon);
         }
 
         return moons;
     }
 
-    public Moon Create(int id, float x, float y, Orbital parent, bool generateAll = false)
+    public Moon Create(int id, float x, float y, Orbital parent, Government government, string name, bool generateAll = false)
     {
         MoonData data = dataManager.GetData<MoonData>();
 

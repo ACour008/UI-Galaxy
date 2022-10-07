@@ -12,15 +12,15 @@ public class OrbitalNameGenerator : MonoBehaviour
     // For Debug. use LehmerRNG later.
     private System.Random rdm = new System.Random();
 
-    private void Start()
+    private void Awake()
     {
         Root = new Root();
         Root = JsonUtility.FromJson<Root>(jsonData.text);
     }
 
-    public void GenerateStarSystemName()
+    public string GenerateStarSystemNameFor(Language language)
     {
-        NameBuilder starNames = Root.GetStarNamesFor(Language.OJIBWE);
-        Debug.Log(starNames.GenerateName(rdm));
+        NameBuilder starNames = Root.GetStarNamesFor(language);
+        return starNames.GenerateName(rdm);
     }
 }

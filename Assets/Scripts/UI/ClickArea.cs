@@ -5,19 +5,10 @@ using UnityEngine;
 public class ClickArea : MonoBehaviour, IClickable
 {
     [SerializeField] private StarInfoPanel infoPanel;
-    [SerializeField] private Selector selector;
+    [SerializeField] private UISelector selector;
     public void OnPointerClicked()
     {
-        infoPanel.ClearAll();
-        selector.ClearSelected();
-
-        if (Galaxy.StarSystemsDebug != null)
-        {
-            foreach(StarSystem s in Galaxy.StarSystemsDebug)
-            {
-                
-                s.ChangeColor(s.Color);
-            }
-        }
+        infoPanel?.ClearAll();
+        selector?.ClearSelected();
     }
 }

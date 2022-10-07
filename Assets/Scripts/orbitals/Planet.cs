@@ -19,38 +19,38 @@ public class Planet : Orbital
 
     public List<Moon> Moons { get => moons; }
 
-    public override double Radius { get => solarRadius * Utils.RO_EARTH; }
-    public override double Mass { get => solarMass * Utils.MO_EARTH; }
+    public override double Radius { get => solarRadius * Utils.Conversions.RO_EARTH; }
+    public override double Mass { get => solarMass * Utils.Conversions.MO_EARTH; }
 
     private void Awake()
     {
         moonCreator = CreatorFactory.GetCreatorFor<Moon>() as MoonCreator;
     }
 
-    public override void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll)
+    public override void Initialize(OrbitalSettings setting, Orbital parent, Government government, string name, bool generateAll)
     {
         PlanetSettings settings = setting as PlanetSettings;
         this.id = ++idAssigner;
         this.type = settings.type;
         this.parent = parent;
-        this.resources = Utils.DistributeRandomness(120000, 500000000, 20);
+        this.resources = Utils.Conversions.DistributeRandomness(120000, 500000000, 20);
 
-        this.age = Utils.DistributeRandomness(setting.ageRange.min, setting.ageRange.max, 20);
-        this.solarRadius = Utils.DistributeRandomness(setting.solarRadiusRange.min, setting.solarRadiusRange.max, 20);
-        this.solarMass = Utils.DistributeRandomness(setting.solarMassRange.min, solarRadius * 1.05, 20);
-        this.rotationSpeed = Utils.DistributeRandomness(setting.rotationSpeedRange.min, setting.rotationSpeedRange.max, 20);
+        this.age = Utils.Conversions.DistributeRandomness(setting.ageRange.min, setting.ageRange.max, 20);
+        this.solarRadius = Utils.Conversions.DistributeRandomness(setting.solarRadiusRange.min, setting.solarRadiusRange.max, 20);
+        this.solarMass = Utils.Conversions.DistributeRandomness(setting.solarMassRange.min, solarRadius * 1.05, 20);
+        this.rotationSpeed = Utils.Conversions.DistributeRandomness(setting.rotationSpeedRange.min, setting.rotationSpeedRange.max, 20);
 
-        double mass = solarMass * Utils.MO_EARTH;
-        double radius = solarRadius * Utils.RO_EARTH * 1000;
+        double mass = solarMass * Utils.Conversions.MO_EARTH;
+        double radius = solarRadius * Utils.Conversions.RO_EARTH * 1000;
         
-        gravity = Utils.GRAVITATIONAL_CONSTANT * (mass / Math.Pow(radius, 2));
+        gravity = Utils.Conversions.GRAVITATIONAL_CONSTANT * (mass / Math.Pow(radius, 2));
         volume = (4 / 3) * Math.PI * Math.Pow(radius, 3);
         density = (mass / 100) / volume;
 
-        orbDistAssigner += Utils.DistributeRandomness(100000, 60000000, 20);
+        orbDistAssigner += Utils.Conversions.DistributeRandomness(100000, 60000000, 20);
         orbitalDistance = orbDistAssigner;
 
-        orbitalPeriod = Math.Sqrt((4 * Math.Pow(Math.PI, 2) * Math.Pow(radius, 3)) / Utils.GRAVITATIONAL_CONSTANT * parent.Mass);
+        orbitalPeriod = Math.Sqrt((4 * Math.Pow(Math.PI, 2) * Math.Pow(radius, 3)) / Utils.Conversions.GRAVITATIONAL_CONSTANT * parent.Mass);
 
         // temp
 
@@ -60,7 +60,7 @@ public class Planet : Orbital
 
 
         if (!generateAll) return;
-        moons = moonCreator.CreateOrbitals(this, generateAll);
+        moons = moonCreator.CreateOrbitals(this, government, name, generateAll);
     }
 
     public static void ResetCounters()

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class StarSystemCreator : Creator<StarSystem>
 {
+    private UISelector selector;
 
-    public StarSystemCreator(DataManager dataManager) : base(dataManager)
+    public StarSystemCreator(DataManager dataManager, UISelector selector) : base(dataManager)
     {
+        this.selector = selector;
     }
 
-    public override void CreateOrbitals(Orbital parent, GalaxyHash galaxyHash, bool discoveryMode)
+    public override void CreateOrbitals(Orbital parent, GalaxyHash galaxyHash, OrbitalNameGenerator nameGenerator, bool discoveryMode)
     {
-        Dictionary<Vector3, bool> chosenPoints = new Dictionary<Vector3, bool>();
+        HashSet<Vector3> chosenPoints = new HashSet<Vector3>();
         float maxRadius = Mathf.Min(galaxyHash.Width, galaxyHash.Height);
 
         for (int i = 0; i < galaxyHash.Width * galaxyHash.Height; i++)
@@ -25,7 +27,7 @@ public class StarSystemCreator : Creator<StarSystem>
             Vector3 testPosition = new Vector3(xPosition, yPosition, 0);
             int repositionTry = 0;
 
-            while (chosenPoints.ContainsKey(testPosition) && repositionTry < 20)
+            while (chosenPoints.Contains(testPosition) && repositionTry <= 15)
             {
                 radius = Mathf.Sqrt(LehmerRNG.NextFloat(0f, 1f) * maxRadius);
                 xPosition = (int)(Mathf.Cos(angle) * radius);
@@ -34,16 +36,22 @@ public class StarSystemCreator : Creator<StarSystem>
                 repositionTry++;
             }
 
-            StarSystem starSystem = Create(i, xPosition, yPosition, parent, !discoveryMode);
+            if (repositionTry >= 15) continue;
+
+            chosenPoints.Add(testPosition);
+
+            StarSystem starSystem = Create(i, xPosition, yPosition, parent, nameGenerator, !discoveryMode);
 
             if (starSystem != null)
             {
+                starSystem.OnClicked += this.selector.Star_OnClicked;
+                
                 galaxyHash.Add(starSystem);
             }
         }
     }
 
-    private StarSystem Create(int id, float x, float y, Orbital parent, bool generateAll=false)
+    private StarSystem Create(int id, float x, float y, Orbital parent, OrbitalNameGenerator nameGenerator, bool generateAll=false)
     {
         bool starShouldExist = LehmerRNG.Next(0, 20) == 1;
         if (!starShouldExist) return null;
@@ -61,7 +69,18 @@ public class StarSystemCreator : Creator<StarSystem>
                 Vector3 position = new Vector3(x, y, 0);
                 GameObject gameObject = GameObject.Instantiate<GameObject>(setting.prefab, position, Quaternion.identity, parent.transform);
                 StarSystem newSystem = gameObject.GetComponent<StarSystem>();
-                newSystem.Initialize(setting, parent, generateAll);
+
+                Government government = CreateGovernmentForSystemId(id);
+                string name;
+
+                if (government.Name == "Nswi Iskodeg") {
+                    name = nameGenerator.GenerateStarSystemNameFor(Language.OJIBWE);
+                }
+                else {
+                    name = $"StarSystem_{id}";
+                }
+
+                newSystem.Initialize(setting, parent, government, name, generateAll);
 
                 return newSystem;
 
@@ -74,5 +93,14 @@ public class StarSystemCreator : Creator<StarSystem>
         }
 
         return null;
+    }
+
+        // For demo purposes;
+    private Government CreateGovernmentForSystemId(int id)
+    {
+        float chance = LehmerRNG.NextFloat(0, 1);
+        string govtName = (chance < 0.33) ? "Nswi Iskodeg" : (chance < 0.66) ? "Alien" : "URSS";
+
+        return new Government(govtName, id);
     }
 }

@@ -19,12 +19,19 @@ public class StarSystem : Orbital, IClickable
     [SerializeField] private int numJumpGates = 0;
     [SerializeField] private int maxJumpGates = 0;
 
+    private int orbitalCount;
+    private Government government;
+
     public event EventHandler<OnStarSystemClickEventArgs> OnClicked;
 
     public Vector3 Position { get => transform.position; set => transform.position = value; }
+    public int OrbitalCount { get => orbitalCount;}
     public List<JumpGate> JumpGates { get => jumpGates; }
-    public int NumberOfJumpGates { get => numJumpGates; }
+    public int JumpGateCount { get => numJumpGates; }
     public int MaxJumpGates { get => maxJumpGates; }
+
+    // prob turn to actual object when fully implemented.
+    public string Government {get => this.government.Name; }
 
     public Color Color { get => CombineColors(); }
     public StarSystemType Type { get => this.type; }
@@ -60,23 +67,24 @@ public class StarSystem : Orbital, IClickable
         spriteRenderer.color = color;
     }
 
-    public override void Initialize(OrbitalSettings orbitalSettings, Orbital parent, bool generateAll)
+    public override void Initialize(OrbitalSettings orbitalSettings, Orbital parent, Government government, string name, bool generateAll)
     {
         StarSystemSettings settings = orbitalSettings as StarSystemSettings;
         this.id = ++idAssigner;
-        this.name = $"StarSystem_{this.id}";
+        this.name = name;
         this.type = settings.type;
         this.age = LehmerRNG.NextDouble(settings.ageRange.min, settings.ageRange.max);
+        this.government = government;
 
         if (!generateAll) return;
 
-        stars = starCreator.CreateOrbitals(this, generateAll);
-
-
+        stars = starCreator.CreateOrbitals(this, government, name, generateAll);
 
         float scale = DetermineScale();
         transform.localScale = new Vector3(scale, scale, 0);
         spriteRenderer.color = CombineColors();
+
+
     }
 
     private float DetermineScale()

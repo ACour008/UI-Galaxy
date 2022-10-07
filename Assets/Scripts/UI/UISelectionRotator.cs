@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class SelectionRotator : MonoBehaviour
+public class UISelectionRotator : MonoBehaviour
 {
-    [SerializeField] GameObject insideSelection;
-    [SerializeField] GameObject outsideSelection;
+    [SerializeField] Image insideSelection;
+    [SerializeField] Image outsideSelection;
     [SerializeField] float outsideRotationSpeed;
     [SerializeField] float insideRotationMultiplier;
 

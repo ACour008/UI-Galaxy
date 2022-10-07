@@ -21,6 +21,6 @@ public abstract class Orbital: MonoBehaviour, IOrbital
     public abstract double Radius { get; }
     public abstract double Mass { get; }
 
-    public abstract void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll);
+    public abstract void Initialize(OrbitalSettings setting, Orbital parent, Government government, string name, bool generateAll);
 
 }

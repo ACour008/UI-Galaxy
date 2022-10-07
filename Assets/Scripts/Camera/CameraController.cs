@@ -17,13 +17,13 @@ public class CameraController : MonoBehaviour
     {
         this.input = input;
 
-        panner.InitializeCamera(camera, eventSystem);
-        zoomer.InitializeCamera(camera, eventSystem);
+        panner?.InitializeCamera(camera, eventSystem);
+        zoomer?.InitializeCamera(camera, eventSystem);
     }
 
     private void LateUpdate()
     {
-        if (startDrag) panner.Pan(input.MousePosition);
+        if (startDrag) panner?.Pan(input.MousePosition);
     }
 
     private void Start()

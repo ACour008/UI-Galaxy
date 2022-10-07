@@ -12,12 +12,12 @@ public abstract class Creator<T>
 
     }
 
-    public virtual void CreateOrbitals(Orbital parent, GalaxyHash galaxyHash, bool discoveryMode)
+    public virtual void CreateOrbitals(Orbital parent, GalaxyHash galaxyHash, OrbitalNameGenerator nameGenerator, bool discoveryMode)
     {
         return;
     }
 
-    public virtual List<T> CreateOrbitals(Orbital parent, bool discoveryMode)
+    public virtual List<T> CreateOrbitals(Orbital parent, Government government, string name, bool discoveryMode)
     {
         return null;
     }

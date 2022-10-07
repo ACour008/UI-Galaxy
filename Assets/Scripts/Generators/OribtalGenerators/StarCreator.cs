@@ -7,7 +7,7 @@ public class StarCreator : Creator<Star>
     {
     }
 
-    public override List<Star> CreateOrbitals(Orbital parent,  bool generateAll)
+    public override List<Star> CreateOrbitals(Orbital parent, Government government, string name, bool generateAll)
     {
         List<Star> stars = new List<Star>();
 
@@ -15,14 +15,14 @@ public class StarCreator : Creator<Star>
         Star.ResetCounters();
         for(int i = 0; i < starLimit; i++)
         {
-            Star newStar = Create(parent, generateAll);
+            Star newStar = Create(parent, government, name, generateAll);
             stars.Add(newStar);
         }
 
         return stars;
     }
 
-    public Star Create(Orbital parent, bool generateAll)
+    public Star Create(Orbital parent, Government government, string name, bool generateAll)
     {
 
         StarData data = dataManager.GetData<StarData>();
@@ -40,7 +40,7 @@ public class StarCreator : Creator<Star>
 
                 Star newStar = gameObject.GetComponent<Star>();
 
-                newStar.Initialize(setting, parent, generateAll);
+                newStar.Initialize(setting, parent, government, name, generateAll);
                 gameObject.SetActive(false);
                 return newStar;
             }

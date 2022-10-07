@@ -8,7 +8,7 @@ public class SpaceStationCreator : Creator<SpaceStation>
     {
     }
 
-    public override List<SpaceStation> CreateOrbitals(Orbital parent, bool discoveryMode)
+    public override List<SpaceStation> CreateOrbitals(Orbital parent, Government government, string name, bool discoveryMode)
     {
         return null;
     }

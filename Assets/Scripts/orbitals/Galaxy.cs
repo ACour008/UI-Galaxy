@@ -7,9 +7,7 @@ public class Galaxy : Orbital
     [SerializeField] private bool showGizmos;
     [SerializeField] private bool discoveryMode;
     [SerializeField] private int seed;
-
-    [SerializeField] private StarInfoPanel infoPanel; // for now; this needs to go into a new class UIHandler maybe...?
-    [SerializeField] private Selector selector;
+    [SerializeField] private OrbitalNameGenerator nameGenerator;
 
     private int sectorSizeX;
     private int sectorSizeY;
@@ -33,33 +31,22 @@ public class Galaxy : Orbital
         LehmerRNG.Initialize(seed);
     }
 
-    public override void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll)
+    public override void Initialize(OrbitalSettings setting, Orbital parent, Government government, string name, bool generateAll)
     {
         sectorSizeX = Mathf.RoundToInt(Screen.width / 8);
         sectorSizeY = Mathf.RoundToInt(Screen.height / 8);
 
         galaxyHash = new GalaxyHash(sectorSizeX, sectorSizeY, 16);
 
-        systemCreator.CreateOrbitals(parent, galaxyHash, generateAll);
+        systemCreator.CreateOrbitals(parent, galaxyHash, nameGenerator, generateAll);
 
         initialized = true;
-    }
-
-    private void Star_OnClicked(object sender, OnStarSystemClickEventArgs eventArgs)
-    {
-        StarSystem system = eventArgs.system;
-        Galaxy.StarSystemsDebug = galaxyHash.GetCellAt(system.Position);
-
-        foreach (StarSystem s in Galaxy.StarSystemsDebug)
-        {
-            s.ChangeColor(Color.green);
-        }
     }
 
     private void Start()
     {
         systemCreator = CreatorFactory.GetCreatorFor<StarSystem>() as StarSystemCreator;
-        Initialize(new GalaxySettings(), this, discoveryMode);
+        Initialize(new GalaxySettings(), this, null, "", discoveryMode);
     }
 
     #region Debug

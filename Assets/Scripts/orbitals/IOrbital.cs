@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IOrbital
 { 
-    public void Initialize(OrbitalSettings setting, Orbital parent, bool generateAll);
+    public void Initialize(OrbitalSettings setting, Orbital parent, Government government, string name, bool generateAll);
 
     public double Radius { get; }
     public double Mass { get; }

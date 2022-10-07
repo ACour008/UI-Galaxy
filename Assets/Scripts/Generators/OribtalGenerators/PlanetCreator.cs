@@ -6,7 +6,7 @@ public class PlanetCreator : Creator<Planet>
 {
     public PlanetCreator(DataManager dataManager):base(dataManager) { }
 
-    public override List<Planet> CreateOrbitals(Orbital parent, bool discoveryMode)
+    public override List<Planet> CreateOrbitals(Orbital parent, Government government, string name, bool discoveryMode)
     {
         List<Planet> planets = new List<Planet>();
 
@@ -15,14 +15,14 @@ public class PlanetCreator : Creator<Planet>
         Planet.ResetCounters();
         for (int i = 0; i < numPlanets; i++)
         {
-            Planet newPlanet = Create(i, 0, 0, parent, discoveryMode);
+            Planet newPlanet = Create(i, 0, 0, parent, government, name, discoveryMode);
             planets.Add(newPlanet);
         }
 
         return planets;
     }
 
-    public Planet Create(int id, float x, float y, Orbital parent, bool generateAll = false)
+    public Planet Create(int id, float x, float y, Orbital parent, Government government, string name, bool generateAll = false)
     {
         PlanetData data = dataManager.GetData<PlanetData>();
 
@@ -41,7 +41,7 @@ public class PlanetCreator : Creator<Planet>
 
                 Planet newPlanet = gameObject.GetComponent<Planet>();
 
-                newPlanet.Initialize(setting, parent, generateAll);
+                newPlanet.Initialize(setting, parent, null, "", generateAll);
                 gameObject.SetActive(false);
 
                 return newPlanet;
