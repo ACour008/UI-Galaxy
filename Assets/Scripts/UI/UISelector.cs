@@ -7,7 +7,7 @@ public class UISelector : MonoBehaviour
 
     [SerializeField] private Camera uiCamera;
     [SerializeField] private SolarDataHUD solarDataHUD;
-    [SerializeField] private GameObject selectionIcon;
+    [SerializeField] private RectTransform selectionIcon;
     [SerializeField] private DialogBox dialogBox;
     [SerializeField] private Vector2 offScreenThreshold;
     [SerializeField] private MinMax<float> selectionSizes;
@@ -16,16 +16,16 @@ public class UISelector : MonoBehaviour
     public StarSystem CurrentSystem { get => currentSelected; }
     public bool IsActive { get => isActive; }
 
+    Canvas parentCanvas;
     RectTransform iconRectTransform;
     Renderer currentSelectedRenderer;
     MinMax<Vector2> screenBoundaries;
     bool isActive;
 
-
-
     void Start()
     {
         iconRectTransform = selectionIcon.GetComponent<RectTransform>();
+        parentCanvas = GetComponentInParent<Canvas>();
         screenBoundaries = new MinMax<Vector2>()
         {
             min = -offScreenThreshold,
@@ -58,6 +58,7 @@ public class UISelector : MonoBehaviour
             currentSelectedRenderer = null;
         }
 
+        parentCanvas.sortingOrder = -1;
         isActive = false;
     }
 
@@ -89,14 +90,15 @@ public class UISelector : MonoBehaviour
         selectionIcon.gameObject.SetActive(true);
         dialogBox.SetActive(true);
         solarDataHUD.SetActive(true);
+
+        parentCanvas.sortingOrder = 1;
         isActive = true;
     }
 
     private void SetHUDPositions()
     {
-        Vector3 targetPosition = uiCamera.WorldToScreenPoint(currentSelected.Position);
-        selectionIcon.transform.position = currentSelected.Position;
-        dialogBox.SetPosition(currentSelected.Position);
+        selectionIcon.transform.position = currentSelected.Position; //worldspace.
+        // dialogBox.SetPosition(currentSelected.Position);
         solarDataHUD.SetPosition(currentSelected.Position);
     }
 

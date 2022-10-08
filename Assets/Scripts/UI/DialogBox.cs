@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// Can make this abstract, in which this particular object inherets from. 
+// The show method should have a payload property that takes the star and places the data accordingly.
 public class DialogBox : MonoBehaviour
 {
     [SerializeField] private ScrollRect scrollRect;
@@ -11,20 +13,23 @@ public class DialogBox : MonoBehaviour
     [SerializeField] private TextMeshProUGUI systemType;
     [SerializeField] private TextMeshProUGUI jumpGateCount;
     [SerializeField] private TextMeshProUGUI age;
+    [SerializeField] private TextMeshProUGUI solarRadius;
+
 
     private RectTransform rectTransform;
-    private MinMax<Vector2> positionMinMax;
+    private MinMax<Vector2> positionBoundary;
 
-    public void Start()
+    public void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        float distanceX = Screen.width / 2;
-        float distanceY = Screen.height / 2;
 
-        positionMinMax = new MinMax<Vector2>() {
-            min = new Vector2(-distanceX, -distanceY),
-            max = new Vector2(distanceX, distanceY)
-        };
+        // float allowableWidth = (Screen.width / 2) - (rectTransform.rect.width / 2) - 50f;
+        // float allowableHeight = (Screen.height / 2) - (rectTransform.rect.height / 2) - 50f;
+
+        // positionBoundary = new MinMax<Vector2>() {
+        //     min = new Vector2(-allowableWidth, -allowableHeight),
+        //     max = new Vector2(allowableWidth, allowableHeight)
+        // };
     }
 
     public void SetActive(bool active) {
@@ -40,14 +45,15 @@ public class DialogBox : MonoBehaviour
         this.systemType.text = starSystem.Type.ToString();
         this.jumpGateCount.text = starSystem.JumpGateCount.ToString();
         this.age.text = Utils.Conversions.ConvertNumber(starSystem.Age, 1e9);
+        this.solarRadius.text = starSystem.Radius.ToString();
     }
 
-    private void Update()
-    {
-        rectTransform.anchoredPosition3D = new Vector3(
-            x: Mathf.Clamp(rectTransform.anchoredPosition3D.x, positionMinMax.min.x, positionMinMax.max.x),
-            y: Mathf.Clamp(rectTransform.anchoredPosition3D.y, positionMinMax.min.y, positionMinMax.max.y),
-            z: rectTransform.anchoredPosition3D.z
-        );
-    }
+    // private void Update()
+    // {
+    //     rectTransform.anchoredPosition3D = new Vector3(
+    //         x: Mathf.Clamp(rectTransform.anchoredPosition3D.x, positionBoundary.min.x, positionBoundary.max.x),
+    //         y: Mathf.Clamp(rectTransform.anchoredPosition3D.y, positionBoundary.min.y, positionBoundary.max.y),
+    //         z: rectTransform.anchoredPosition3D.z
+    //     );
+    // }
 }

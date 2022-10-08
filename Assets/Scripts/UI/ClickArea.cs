@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-
-public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] CameraController cameraController;
 
@@ -11,10 +9,7 @@ public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(InputController.instance.IsRightButtonPressed);
-
-        if(InputController.instance.IsMiddleButtonPressed ||
-            InputController.instance.IsRightButtonPressed)
+        if(InputController.instance.IsMiddleButtonPressed)
         {
             cameraController.Panner.SetDragOrigin(InputController.instance.MousePosition);
             cameraController.StartDrag = true;
