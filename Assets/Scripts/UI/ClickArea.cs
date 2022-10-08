@@ -3,13 +3,18 @@ using UnityEngine.EventSystems;
 
 
 
-public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] CameraController cameraController;
 
+    private bool IsPointerOnScreen;
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(InputController.instance.IsMiddleButtonPressed)
+        Debug.Log(InputController.instance.IsRightButtonPressed);
+
+        if(InputController.instance.IsMiddleButtonPressed ||
+            InputController.instance.IsRightButtonPressed)
         {
             cameraController.Panner.SetDragOrigin(InputController.instance.MousePosition);
             cameraController.StartDrag = true;
@@ -19,6 +24,16 @@ public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             // This will not be a singleton once the UI Manager is set up. Im procrastinating.
             UISelector.instance.ClearSelected();
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        IsPointerOnScreen = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        IsPointerOnScreen = false;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -34,7 +49,7 @@ public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (InputController.instance.ScrollWheelDirection != 0)
         {
-            cameraController.Zoomer.Zoom(InputController.instance.ScrollWheelDirection, InputController.instance.MousePosition);
+            if (IsPointerOnScreen) cameraController.Zoomer.Zoom(InputController.instance.ScrollWheelDirection, InputController.instance.MousePosition);
         }
     }
 }

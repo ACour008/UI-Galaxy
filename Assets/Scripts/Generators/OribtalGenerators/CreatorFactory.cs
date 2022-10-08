@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CreatorFactory: MonoBehaviour
 {
-    [SerializeField] private StarInfoPanel infoPanel; // for now; this needs to go into a new class UIHandler maybe...?
+    // [SerializeField] private StarInfoPanel infoPanel; // for now; this needs to go into a new class UIHandler maybe...?
     [SerializeField] private UISelector selector;
 
     static StarCreator starCreator;
