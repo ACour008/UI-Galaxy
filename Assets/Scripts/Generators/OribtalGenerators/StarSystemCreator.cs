@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class StarSystemCreator : Creator<StarSystem>
 {
-    private UISelector selector;
-
-    public StarSystemCreator(DataManager dataManager, UISelector selector) : base(dataManager)
-    {
-        this.selector = selector;
-    }
+    public StarSystemCreator(DataManager dataManager) : base(dataManager) {}
 
     public override void CreateOrbitals(Orbital parent, GalaxyHash galaxyHash, OrbitalNameGenerator nameGenerator, bool discoveryMode)
     {

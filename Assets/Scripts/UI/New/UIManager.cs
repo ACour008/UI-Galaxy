@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public static UIManager instance;
+
+    [SerializeField] private Window mainHUD;
+    
+    public StarSystem selectedSystem;
+
+    private void Awake() {
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnStarClicked(StarSystem star) 
     {
-        
+        selectedSystem = star;
+        mainHUD.OpenPanel("star-properties");
     }
 }

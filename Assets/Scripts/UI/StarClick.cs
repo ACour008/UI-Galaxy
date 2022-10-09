@@ -14,12 +14,9 @@ public class StarClick : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (UISelector.instance.CurrentSystem == star)
+        if (UIManager.instance.selectedSystem != star)
         {
-            UISelector.instance.ClearSelected();
-            return;
+            UIManager.instance.OnStarClicked(star);
         }
-
-        UISelector.instance.SetSelected(star);
     }
 }

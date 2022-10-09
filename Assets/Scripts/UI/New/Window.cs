@@ -2,30 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Window: MonoBehaviour
+public class Window
 {
-    private Dictionary<int, Panel> panels;
-    private static int PanelId = 0;
+    private Dictionary<string, Panel> panels;
 
     public Window()
     {
-        panels = new Dictionary<int, Panel>();
+        panels = new Dictionary<string, Panel>();
     }
 
-    public void AddPanel(Panel newPanel) {
-        panels.Add(++PanelId, newPanel);
+    public void AddPanel(string key, Panel newPanel) {
+        panels.Add(key, newPanel);
     }
 
-    public void OpenPanel(int id) => SetPanelActive(id, true);
+    public void OpenPanel(string panelId) => SetPanelActive(panelId, true);
 
-    public void ClosePanel(int id) => SetPanelActive(id, false);
+    public void ClosePanel(string panelId) => SetPanelActive(panelId, false);
 
-    private void SetPanelActive(int id, bool active)
+    private void SetPanelActive(string panelId, bool active)
     {
-        if (panels.TryGetValue(id, out Panel p)) {
-            p.gameObject.SetActive(active);
+        if (panels.TryGetValue(panelId, out Panel panel)) {
+            panel.Activate();
             return;
         }
         throw new KeyNotFoundException();
+    }
+
+    public void Refresh()
+    {
+        foreach(KeyValuePair<string, Panel> entry in panels)
+        {
+            entry.Value.Refresh();
+        }
     }
 }
