@@ -10,11 +10,12 @@ public class SolarPropertiesComponent : MonoBehaviour
     [SerializeField] private TextMeshProUGUI age;
     [SerializeField] private TextMeshProUGUI solarRadius;
 
-    public void SetData(StarSystem star) 
+    public void SetData(StarSystem starSystem) 
     {
-        this.systemType.text = star.Type.ToString();
-        this.jumpGateCount.text = star.JumpGateCount.ToString();
-        this.age.text = Utils.Conversions.ConvertNumber(star.Age, 1e9);
-        this.solarRadius.text = star.Radius.ToString();
+        this.systemType.text = starSystem.Type.ToString();
+        this.jumpGateCount.text = starSystem.JumpGateCount.ToString();
+        this.age.text = Utils.Conversions.ConvertNumber(starSystem.Age, 1e9);
+
+        this.solarRadius.text = string.Format("{0:0.##}", Utils.Conversions.ConvertKmToAu(starSystem.Radius));
     }
 }

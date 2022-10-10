@@ -6,7 +6,7 @@ public class StarSystem : Orbital
 {
     private static int idAssigner = -1;
     
-    [SerializeField] private StarSystemType type;
+    [SerializeField] private SystemType type;
     private StarCreator starCreator;
     private SpriteRenderer spriteRenderer;
     private List<Star> stars;
@@ -24,11 +24,12 @@ public class StarSystem : Orbital
     public int MaxJumpGates { get => maxJumpGates; }
     public string Government {get => this.government.Name; }     // prob turn to actual object when fully implemented.
     public Color Color { get => CombineColors(); }
-    public StarSystemType Type { get => this.type; }
+    public SystemType Type { get => this.type; }
     public double Age { get => age; }
     public int Id { get => id; }
     public override double Radius { get => solarRadius; }
     public override double Mass { get => solarMass; }
+    public List<Star> Stars { get => stars; }
     #endregion
 
     public void Awake()

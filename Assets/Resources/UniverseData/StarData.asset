@@ -37,7 +37,7 @@ MonoBehaviour:
       max: 0
     prefab: {fileID: 1157918746108656747, guid: 1a9c998d2ea5c9a489fe3acb00efdeb7, type: 3}
     type: 6
-    color: {r: 0, g: 0.49019608, b: 1, a: 1}
+    color: {r: 0.22352941, g: 0.6313726, b: 1, a: 1}
     chanceOfSpawn: 0.01
     temperatureRange:
       min: 30000

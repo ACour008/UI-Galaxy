@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1157918746108656750}
   - component: {fileID: 1157918746108656745}
   - component: {fileID: 1157918746108656744}
-  m_Layer: 0
+  - component: {fileID: 5245196154526733141}
+  m_Layer: 6
   m_Name: Star
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,6 +46,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -112,4 +115,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e88b4b24803340448bec4ec3360d153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  age: 0
+  solarRadius: 0
+  temperature: 0
+  solarMass: 0
+  gravity: 0
+  density: 0
+  volume: 0
+  orbitalDistance: 0
+  orbitalPeriod: 0
+  rotationSpeed: 0
   spriteRenderer: {fileID: 1157918746108656750}
+  type: 0
+  luminosity: 0
+--- !u!114 &5245196154526733141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157918746108656747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba67c24de6519048b1e55dfd87dccbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: baabd09e4ffa9c44494dc4a8a676b411, type: 3}
+  - {fileID: 21300000, guid: f66fe23a35f801342b485a9418a93f1a, type: 3}
+  - {fileID: 21300000, guid: ab19051399e57434a841a47ce26aa8a4, type: 3}
+  - {fileID: 21300000, guid: 45b10efc7aa2cc242a91b18489de8a20, type: 3}
+  - {fileID: 21300000, guid: be8e62587b51f9d4c9e30e535cc37820, type: 3}
+  - {fileID: 21300000, guid: 61fdaf8539871e84bb56eeaf9158bb23, type: 3}
+  - {fileID: 21300000, guid: 7d83c9d91a7fd1745b463fac15305e08, type: 3}

@@ -48,7 +48,7 @@ public class StarData : OrbitalData
 public class StarSettings: OrbitalSettings
 {
     public GameObject prefab;
-    public SystemType type;
+    public StarType type;
     public Color color;
     public float chanceOfSpawn;
     public MinMax<double> temperatureRange;
@@ -62,7 +62,7 @@ public struct MinMax<T>
     public T max;
 }
 
-public enum SystemType
+public enum StarType
 {
     // D = 0,
     M = 0,

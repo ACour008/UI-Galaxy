@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Panel
+public abstract class Panel: MonoBehaviour
 {
-    public string id { get; protected set; }
+    public abstract string id { get; }
 
-    public abstract void Activate();
-    public abstract void Refresh();
+    public abstract void SetActive(bool active);
+    public abstract void Refresh(object payload = null);
 }

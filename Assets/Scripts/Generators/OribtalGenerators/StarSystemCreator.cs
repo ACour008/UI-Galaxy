@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class StarSystemCreator : Creator<StarSystem>
 {
-    public StarSystemCreator(DataManager dataManager) : base(dataManager) {}
+    private UIManager uiManager;
+    public StarSystemCreator(DataManager dataManager, UIManager uiManager) : base(dataManager)
+    {
+        this.uiManager = uiManager;
+    }
 
     public override void CreateOrbitals(Orbital parent, GalaxyHash galaxyHash, OrbitalNameGenerator nameGenerator, bool discoveryMode)
     {
@@ -38,7 +42,8 @@ public class StarSystemCreator : Creator<StarSystem>
             StarSystem starSystem = Create(i, xPosition, yPosition, parent, nameGenerator, !discoveryMode);
 
             if (starSystem != null)
-            {                
+            {   
+                starSystem.GetComponent<StarClick>().starClicked += uiManager.OnStarClicked;
                 galaxyHash.Add(starSystem);
             }
         }

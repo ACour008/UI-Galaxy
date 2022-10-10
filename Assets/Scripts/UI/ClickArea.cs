@@ -3,21 +3,22 @@ using UnityEngine.EventSystems;
 
 public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] InputController inputController;
     [SerializeField] CameraController cameraController;
+    [SerializeField] UIManager uiManager;
 
     private bool IsPointerOnScreen;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(InputController.instance.IsMiddleButtonPressed)
+        if(inputController.IsMiddleButtonPressed)
         {
-            cameraController.Panner.SetDragOrigin(InputController.instance.MousePosition);
+            cameraController.Panner.SetDragOrigin(inputController.MousePosition);
             cameraController.StartDrag = true;
         }
-        else if (InputController.instance.IsLeftButtonPressed) 
+        else if (inputController.IsLeftButtonPressed) 
         {
-            // This will not be a singleton once the UI Manager is set up. Im procrastinating.
-            UISelector.instance.ClearSelected();
+            uiManager.OnNothingClicked();
         }
     }
 
@@ -33,7 +34,7 @@ public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if(!InputController.instance.IsMiddleButtonPressed)
+        if(!inputController.IsMiddleButtonPressed)
         {
             cameraController.StartDrag = false;
             cameraController.Panner.ClearDragData();
@@ -42,9 +43,9 @@ public class ClickArea : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     private void Update()
     {
-        if (InputController.instance.ScrollWheelDirection != 0)
+        if (inputController.ScrollWheelDirection != 0)
         {
-            if (IsPointerOnScreen) cameraController.Zoomer.Zoom(InputController.instance.ScrollWheelDirection, InputController.instance.MousePosition);
+            if (IsPointerOnScreen) cameraController.Zoomer.Zoom(inputController.ScrollWheelDirection, inputController.MousePosition);
         }
     }
 }

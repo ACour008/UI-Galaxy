@@ -8,25 +8,27 @@ public class Star : Orbital
 
     private static int IdAssigner = -1;
 
-    [SerializeField] private SystemType type;
+    [SerializeField] private StarType type;
     [SerializeField] private double luminosity;
 
     private Orbital parent;
     private Color color;
     private List<Planet> planets;
+    private SpriteLoader spriteLoader;
 
     private PlanetCreator planetCreator;
 
     public Vector3 Position { get => transform.position; }
-    public SystemType Type { get => type; }
+    public StarType Type { get => type; }
     public List<Planet> Planets { get => planets; }
     public Color Color { get => color; }
-    public override double Radius { get => solarRadius * Utils.Conversions.MO_SUN; }
+    public override double Radius { get => solarRadius * Utils.Conversions.RO_SUN; }
     public override double Mass { get => solarMass * Utils.Conversions.MO_SUN; }
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteLoader = GetComponent<SpriteLoader>();
         planetCreator = (PlanetCreator)CreatorFactory.GetCreatorFor<Planet>();
     }
     public override void Initialize(OrbitalSettings orbitalSettings, Orbital parent, Government government, string name, bool generateAll)
@@ -39,7 +41,10 @@ public class Star : Orbital
         this.color = settings.color;
         this.parent = parent;
 
+        spriteRenderer.sprite = spriteLoader.LoadSprite((int)this.type);
+
         name = $"Star_{id}";
+        this.angle = LehmerRNG.NextFloat(0, 360);
         this.age = Utils.Conversions.DistributeRandomness(settings.ageRange.min, settings.ageRange.max, 20);
         this.solarRadius = Utils.Conversions.DistributeRandomness(settings.solarRadiusRange.min, settings.solarRadiusRange.max, 20);
         this.solarMass = Utils.Conversions.DistributeRandomness(settings.solarMassRange.min, solarRadius * 1.05, 20);
@@ -48,13 +53,13 @@ public class Star : Orbital
         this.luminosity = Utils.Conversions.DistributeRandomness(settings.luminosityInMagnitude.min, settings.luminosityInMagnitude.max, 20);
 
         double mass = solarMass * Utils.Conversions.MO_SUN;
-        double radius = solarRadius * Utils.Conversions.RO_SUN * 1000;
+        double radius = solarRadius * Utils.Conversions.RO_SUN * 1000; // why this 1000 here?
 
         gravity = Utils.Conversions.GRAVITATIONAL_CONSTANT * (mass / Math.Pow(radius, 2));
         volume = (4 / 3) * Math.PI * Math.Pow(radius, 3);
         density = (mass / 100) / volume;
         orbitalPeriod = 0;
-        orbitalDistance = 0;
+        orbitalDistance = (p.Type == SystemType.SINGLE) ? 0 : LehmerRNG.NextDouble(2.5e5, 3.6e9);
 
         if (!generateAll) return;
         planets = planetCreator.CreateOrbitals(this,government, name, generateAll);

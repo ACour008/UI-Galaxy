@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Orbital: MonoBehaviour, IOrbital
 {
     protected int id;
+    [SerializeField] protected float angle;
     [SerializeField] protected double age;
     [SerializeField] protected double solarRadius;
     [SerializeField] protected double temperature;
@@ -16,8 +17,14 @@ public abstract class Orbital: MonoBehaviour, IOrbital
     [SerializeField] protected double orbitalPeriod;
     [SerializeField] protected double rotationSpeed;
 
-    public double OrbitalDistance { get => orbitalDistance; }
+    public float Angle { get => angle; }
+    public double OrbitalDistance
+    { 
+        get => orbitalDistance;
+        protected set => orbitalDistance = value;
+    }
 
+    public int ID { get => id; }
     public abstract double Radius { get; }
     public abstract double Mass { get; }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class CreatorFactory: MonoBehaviour
 {
     // [SerializeField] private StarInfoPanel infoPanel; // for now; this needs to go into a new class UIHandler maybe...?
-    // [SerializeField] private UISelector selector;
+    [SerializeField] private UIManager uiManager;
 
     static StarCreator starCreator;
     static PlanetCreator planetCreator;
@@ -16,12 +16,12 @@ public class CreatorFactory: MonoBehaviour
     static SpaceStationCreator spacePortCreator;
 
     static DataManager dataManager;
-    // public static UISelector Selector;
+    static UIManager UIManager;
 
     public void Awake()
     {
         dataManager = new DataManager();
-        // CreatorFactory.Selector = this.selector;
+        UIManager = uiManager;
     }
 
     public static Creator<T2> GetCreatorFor<T2>()
@@ -46,7 +46,7 @@ public class CreatorFactory: MonoBehaviour
         }
         else if (typeofT2 == typeof(StarSystem))
         {
-            if (systemCreator == null) systemCreator = new StarSystemCreator(dataManager);
+            if (systemCreator == null) systemCreator = new StarSystemCreator(dataManager, UIManager);
             return systemCreator as Creator<T2>;
         }
         else if (typeofT2 == typeof(Moon))

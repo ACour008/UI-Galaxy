@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5704317755456601573}
   - component: {fileID: 5704317755456601572}
   - component: {fileID: 4303082476283883275}
-  m_Layer: 6
+  - component: {fileID: 8666878250014109125}
+  m_Layer: 0
   m_Name: StarSystem
   m_TagString: PlanetUI
   m_Icon: {fileID: 0}
@@ -115,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0bc1d52c4a2b9a45ba9ca2108ca4a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  angle: 0
   age: 0
   solarRadius: 0
   temperature: 0
@@ -140,3 +142,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735ba81fc4c0a4345883347658f682ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8666878250014109125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5704317755456601575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba67c24de6519048b1e55dfd87dccbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

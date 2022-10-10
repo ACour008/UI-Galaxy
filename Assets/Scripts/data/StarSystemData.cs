@@ -39,14 +39,14 @@ public class StarSystemData : OrbitalData
 [Serializable]
 public class StarSystemSettings: OrbitalSettings
 { 
-    public StarSystemType type;
+    public SystemType type;
     public float chanceOfSpawn;
     public GameObject prefab;
     public MinMax<float> prefabScaleRange;
     public MinMax<int> numJumpGates;
 }
 
-public enum StarSystemType
+public enum SystemType
 {
     SINGLE = 1,
     BINARY = 2,

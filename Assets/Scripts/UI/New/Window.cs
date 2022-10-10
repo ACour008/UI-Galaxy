@@ -2,13 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Window
+public abstract class Window : MonoBehaviour
 {
-    private Dictionary<string, Panel> panels;
+    [SerializeField] private List<Panel> panelPrefabs;
 
-    public Window()
+    protected Dictionary<string, Panel> panels;
+
+    private void Awake()
     {
         panels = new Dictionary<string, Panel>();
+    }
+
+    private void Start()
+    {
+        foreach(Panel panel in panelPrefabs)
+        {
+            AddPanel(panel.id, panel);
+        }
     }
 
     public void AddPanel(string key, Panel newPanel) {
@@ -22,17 +32,25 @@ public class Window
     private void SetPanelActive(string panelId, bool active)
     {
         if (panels.TryGetValue(panelId, out Panel panel)) {
-            panel.Activate();
+            panel.SetActive(active);
             return;
         }
         throw new KeyNotFoundException();
     }
 
-    public void Refresh()
+    public void RefreshAll()
     {
         foreach(KeyValuePair<string, Panel> entry in panels)
         {
             entry.Value.Refresh();
+        }
+    }
+
+    public void RefreshPanel(string panelId, object payload = null)
+    {
+        if (panels.TryGetValue(panelId, out Panel panel))
+        {
+            panel.Refresh(payload);
         }
     }
 }

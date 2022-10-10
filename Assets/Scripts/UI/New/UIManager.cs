@@ -1,22 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public delegate void StarClickDelegate(StarSystem star);
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance;
+    [SerializeField] MainHUD mainHUD;
+    [SerializeField] SelectionHUD selectionHUD;
+    [SerializeField] StarViewer starViewer;
 
-    [SerializeField] private Window mainHUD;
-    
-    public StarSystem selectedSystem;
-
-    private void Awake() {
-        instance = this;
-    }
+    public StarSystem selectedStar;
 
     public void OnStarClicked(StarSystem star) 
     {
-        selectedSystem = star;
-        mainHUD.OpenPanel("star-properties");
+        if (selectedStar != null) 
+        {
+            starViewer.Clear(selectedStar);
+
+            if (selectedStar == star)
+            {
+                mainHUD.Close();
+                selectionHUD.Close();
+                starViewer.Clear(selectedStar);
+                selectedStar = null;
+                return;
+            }
+        }
+
+        selectedStar = star;
+        mainHUD.Open(star);
+        selectionHUD.Open(star);
+        starViewer.ShowSystem(star);
+    }
+
+    public void OnNothingClicked()
+    {
+        mainHUD.Close();
+        selectionHUD.Close();
+        starViewer.Clear(selectedStar);
+        selectedStar = null;
     }
 }
